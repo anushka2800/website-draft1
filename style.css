@@ -11,12 +11,19 @@
   --accent: #e0e0e0;      /* neutral light gray for CTAs/links */
   --accent-hover: #ffffff;/* hover highlight */
   --border: rgba(255,255,255,0.08);
-  --bg-1:rgb(235, 236, 238);    /* light gray background for sections */
+  --bg-1:rgb(228, 229, 231);    /* light gray background for sections */
 
     --radius: 12px;
-    --container: 1100px;
-    --gap: 20px;
-    --page-padding: 20px;
+      --container: 1100px;
+      --gap: 20px;
+      --page-padding: 20px;
+
+     --c1: #ff007f;
+  --c2: #ff7a00;
+  --c3: #ffea00;
+  --c4: #00ff9f;
+  --c5: #00d4ff;
+  --c6: #7a00ff;
 }
 
 /* --------------- Reset & base --------------- */
@@ -34,11 +41,11 @@ body {
     margin: 0;
     font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     color: var(--text-dark);
-  background:var(--bg);
+  background:#F5F5F5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.5;
-    font-size: 16px;
+    position: relative;
 }
 
 /* container */
@@ -52,10 +59,11 @@ body {
 /* --------------- Header --------------- */
 .site-header {
     /* position:relative; */
-    margin-top: -20px;
+    margin-top: 0px;
     z-index: 60;
     /* backdrop-filter: blur(6px); */
-    background: var(--bg);
+   background:#F5F5F5;
+
 }
 .brand {
   display: flex;
@@ -66,20 +74,18 @@ body {
   z-index: 2;                 /* ensures logo stays above other elements */
 }
 .brand img {
-  height: 150px;              /* ✅ your preferred size */
+  height: 100px;              /* ✅ your preferred size */
   width: auto;
   display: block;
   object-fit: contain;
   transition: transform 0.3s ease;
   cursor: pointer;
-   filter:  invert(1) grayscale(1) brightness(2) contrast(1.15) saturate(0);
+  transform: scale(0.98);
+  transform-origin: center;
+   /* filter:  invert(1) grayscale(1) brightness(2) contrast(1.15) saturate(0); */
 
   position: relative;
   top: -11px;                 /* ✅ moves image upward so navbar doesn’t expand */
-}
-/* optional: add a subtle hover effect */
-.brand img:hover {
-  transform: scale(1.05);
 }
 
 /* ensure the header layout aligns the logo and nav items nicely */
@@ -90,26 +96,29 @@ body {
   padding: 8px 24px;
   min-height: 80px;          /* keeps navbar height consistent */
   box-sizing: border-box;
-  overflow: visible;          /* ✅ allows logo to visually overflow downward */
+  overflow: visible;        /* ✅ allows logo to visually overflow downward */
 }
+
 
 /* nav */
 .nav {
     display: flex;
     align-items: center;
+
 }
 
 .nav-list {
     list-style: none;
-    margin: 0;
+    margin: -2rem 0 0 0;
     padding: 0;
     display: flex;
     gap: 8px;
+    font-size: 1.05rem;
     align-items: center;
 }
 
 .nav-list a {
-    color: var(--text-muted);
+  color: var(--light-title);
     text-decoration: none;
     padding: 10px 12px;
     border-radius: 8px;
@@ -205,146 +214,168 @@ body {
     transition: all 200ms ease;
 }
 
-/* .btn.outline {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text-dark);
-} */
-
-/* .btn.outline:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-} */
-
-/* --------------- Hero --------------- */
 .hero {
-    padding: 50px 0;
-    background: var(--bg);
-   
-}
-
-.hero-grid {
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    gap: 32px;
-    pointer-events: none;
-}
-
-.hero h1 {
-    font-family: Poppins, Inter;
-    font-size: 3rem;
-    margin: -20px 50px 14px 0;
-     color: #fff; /* cyan text */
-    text-shadow:
-        0 0 8px rgba(0, 255, 240, 0.85),
-        0 0 16px rgba(0, 255, 240, 0.65),
-        0 0 28px rgba(0, 255, 240, 0.45),
-        0 0 42px rgba(0, 255, 240, 0.25);
-    transition: text-shadow 0.3s ease;
-     max-width: 30ch; /* adjust this value to control where the line breaks */
-  line-height: 1.5;
-  margin-left:5rem;
-  word-spacing: 5px;
-  word-break: break-word;
-}
-.headline-sub {
-    display: inline-block;
-    margin-left: 4rem; /* adjust this value as needed */
-}
-/* wrapper reserves enough width and hides overflow while keeping layout steady */
-.dynamic-word-wrap {
-  display: inline-block;
   position: relative;
-  width: auto;            /* we'll set explicit width from JS */
-  vertical-align: bottom;
-  margin-left: 8px;
-  overflow: hidden;
-  white-space: nowrap;
-  color:var(--text-dark);
-  
-}
-
-/* anim target */
-.dynamic-word {
-  display: inline-block;
-  white-space: nowrap;
-  will-change: transform, opacity;
-  backface-visibility:hidden;
-  transform: translate3d(0,0,0);
-  opacity: 1;
-pointer-events: auto;
-  transition: none;
-}
-/* ========== Video grow section ========== */
-.video-grow-wrap {
- background: var(--bg);     
-  padding: 28px 0 12px;         /* spacing above clients */
+  min-height: 70vh;            /* tweak if you want taller/shorter */
   display: flex;
   align-items: center;
-}
-.video-grow-wrap .container {
-  display: flex;
   justify-content: center;
-  align-items: center;
-  margin-top: -4rem;
- /* margin-top: -2rem; */
-  margin-bottom: 4rem;
+  overflow: visible;           /* allow video box to sit above background */
+  padding-top: 140px;          /* prevent header overlap — adjust to your header height (150px logo) */
+}
+/* the wrapper: controls size, centering and rounded corners */
+.hero-video {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 57%;
+  transform: translate(-50%, -50%);
+  width: 80%;                  /* change % to suit your design (e.g. 70% / 60%) - no max-width used */
+  border-radius: clamp(18px, 4vw, 36px); /* responsive rounding */
+  overflow: hidden;            /* clip video & overlay to rounded box */
+  box-shadow:
+    0 20px 60px rgba(3, 15, 25, 0.28),
+    0 8px 25px rgba(3, 15, 25, 0.18);
+  background: transparent;            /* fallback if video not loaded */
+  will-change: transform;
+  height: 580px;
 }
 
-/* the element we animate */
-.video-inner {
-  width: 40%;            /* initial width (33%) */
-  max-width: 1200px;            /* safety cap */
-  height: 90%;                 /* initial height (90% of viewport) */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  pointer-events: none;
-  /* keep video visually centered while width animates */
-}
-
-/* video element fills its wrapper preserving aspect ratio */
-.video-inner video {
+/* the video fills the wrapper (keeps aspect via object-fit) */
+.hero-video video {
   width: 100%;
   height: 100%;
-  object-fit: cover;            /* cover to fill box, or use 'contain' if you want full frame shown */
-  border-radius: 12px;
-  box-shadow: 0 18px 40px rgba(56,73,89,0.08);
+  object-fit: cover;
   display: block;
-  will-change: transform;
+  border-radius: inherit;
+  -webkit-border-radius: inherit;
+  z-index: 1;
 }
 
-/* --- Scroll-grow video (no layout shift) --- */
+/* overlay clipped inside the wrapper only */
+.video-overlay {
+   position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  /* background: linear-gradient(135deg, #0cd7e6 0%, #14f0fa 100%); */
+  opacity: 0.70;              
+  mix-blend-mode: multiply;    
+  border-radius: inherit;
+}
+
+/* Hero title – perfectly centered on video */
+.hero-title {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+  font-size: clamp(2.5rem, 3vw, 4.5rem);
+  line-height: 1.2;
+  pointer-events: none;
+  margin: 0;
+  padding: 0 20px;
+  width: 90%;
+}
+
+/* Both lines get the same vibrant moving gradient */
+.hero-title .line-1,
+.hero-title .line-2,
+.hero-title .word {
+  display: block;
+  background: linear-gradient(90deg, 
+   #ff006e,   /* Hot magenta – brighter */
+    #ff3a00,   /* Vivid red-orange */
+    #ff6b00,   /* Electric orange */
+    #ff9500,   /* Bright amber */
+    #ffca00,   /* Golden yellow */
+    #00ff9f,   /* ONE BRIGHT ELECTRIC BLUE (replaces all cyan/blue) */
+    #9c00ff,   /* Deep neon purple */
+    #ff006e    /* Back to hot magenta */
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 12s ease infinite;
+
+  /* MAX BOLD + RICH VIBRANT COLORS */
+  /* font-weight: 700; */
+  /* Thick stroke using the SAME gradient (no white halo!) */
+  -webkit-text-stroke: 3px;
+  -webkit-text-stroke-color: transparent;           /* keeps layout */
+  paint-order: stroke fill;                         /* draws stroke behind fill */
+  text-shadow: 0 0 6px rgba(255,255,255,0.25);     /* tiny crisp glow */
+}
+
+/* Second line stays in one horizontal line */
+.hero-title .line-2 {
+  display: block;
+  font-size: 0.92em;
+  white-space: nowrap; /* forces "To High-Intent Audiences" to stay on one line */
+}
+
+/* Dynamic word container */
+.dynamic-text {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  min-width: 160px; /* prevents jumping when words change length */
+}
+
+/* Individual rotating words */
+.dynamic-text .word {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+/* First word visible */
+.dynamic-text .word:first-child {
+  position: relative;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Moving gradient animation (applies to all text) */
+@keyframes gradientShift {
+  0%, 100%   { background-position: 0% 50%; }
+  50%        { background-position: 100% 50%; }
+}
 
 .clients-section {
   padding: 48px 0;
-  background: transparent; /* change if you want a tinted band */
   text-align: center;
-  margin-top: 6rem;
-  background-color: var(--bg-1);
   cursor: default;
+  margin-top: 9rem;
+  margin-bottom: 50px;
+  background-color: #F5F5F5;
+  box-shadow:
+        0 0 10px rgba(10, 248, 249, 0.28),
+    0 0 18px rgba(10, 248, 249, 0.22),
+    0 0 36px rgba(10, 248, 249, 0.15),
+    0 12px 28px rgba(0, 0, 0, 0.08),
+     inset 0 4px 6px rgba(255, 255, 255, 0.28),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.06);
+
 }
 
 .clients-title{
-   font-size: 1.6rem;
+   font-size: 2rem;
     margin: -30px 0 8px;
     color: var(--light-title);
-}
-.services-title {
-   font-size: 1.6rem;
-    margin: -30px 0 8px;
-    color: var(--text-dark);
-}
-.services-section{
-  text-align: center;
-  background: var(--bg);
 }
 .clients-sub {
   color: var(--light-text);
   margin: 0 0 20px;
-  font-size: 1rem;
+  font-size: 1.2rem;
   max-width: 64ch;
   font-weight: 500;
   margin-left: auto;
@@ -410,6 +441,69 @@ pointer-events: auto;
 .marquee-track[aria-paused="true"] {
   animation-play-state: paused;
 }
+/* ====== GLOBAL BLOB STYLE ====== */
+.hero-blob {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.35));
+  transform-origin: center;
+  /* We will move them via CSS variables from JS */
+ transform:
+    translate3d(
+      var(--blob-offset-x, 0px),
+      var(--blob-offset-y, 0px),
+      0
+    )
+    scale(var(--blob-scale, 1))
+    rotate(var(--blob-rotate, 0deg));
+  opacity: 0.75;
+}
+
+/* Smaller base size */
+.hero-blob svg,
+.hero-blob {
+  width: 400px;
+  height: auto;
+}
+
+/* Make sections relative so blobs position inside them */
+.services-section,
+.section#advertisers {
+  position: relative;
+  overflow: visible;
+}
+
+/* --- Services blobs (side positions) --- */
+.hero-blob--services-left {
+  top: 200px;
+  left: -90px;    /* left side, slightly outside */
+}
+
+.hero-blob--services-right {
+  top: 15%;
+  right: -140px;    /* right side, slightly outside */
+}
+
+/* --- Advertisers/Publishers blobs --- */
+.hero-blob--adpub-left {
+  top: -30px;
+  left: -140px;     /* near advertiser column */
+}
+
+.hero-blob--adpub-right {
+  top: 60%;
+  right: -140px;    /* near publisher column */
+}
+
+
+/* make sections relative so blob is positioned inside them */
+.services-section,
+.section#advertisers {
+  position: relative;
+  overflow: visible;
+}
+
 .split-columns-grid {
     display: grid;
     grid-template-columns: 1fr 1fr; /* Two equal columns */
@@ -430,7 +524,7 @@ pointer-events: auto;
 
 /* Specific styling for column titles/text */
 .column-title {
-    font-size: 1.7rem;
+    font-size: 1.8rem;
     margin: 0 0 4px;
     color: var(--light-title);
 }
@@ -448,7 +542,7 @@ pointer-events: auto;
     position: relative;
     padding-left: 20px;
     margin-bottom: 8px;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     font-weight: 500;
      color: var(--light-muted);
 }
@@ -458,7 +552,6 @@ pointer-events: auto;
   font-weight: 700;
   position: absolute;
   left: 0;
-
   background: linear-gradient(135deg, #0cd7e6 0%, #14f0fa 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -468,7 +561,7 @@ pointer-events: auto;
     margin-top: auto; /* Pushes the button to the bottom */
 }
 
-/* Custom background tint for one column (optional) */
+
 /* Animated gradient background for advertiser and publisher columns */
 .advertiser-column,
 .publishers-column {
@@ -482,44 +575,41 @@ pointer-events: auto;
     0 0 6px rgba(10, 248, 249, 0.22); 
    transform: scale(0.9); /* reduces size slightly */
   transform-origin: center;
- /* box-shadow: 0 8px 22px rgba(0,0,0,.25);   */
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 /* staggered reveal for advertiser/publisher points */
-.advertiser-column .feature-list li,
-.publishers-column .feature-list li {
+/* Advertiser/Publisher headings: start hidden & slightly down */
+.advertiser-column .column-title,
+.publishers-column .column-title {
   opacity: 0;
-  transform: translateY(10px);
-  transition: transform 340ms cubic-bezier(.2,.9,.2,1), opacity 340ms ease;
+  transform: translateY(16px);
   will-change: transform, opacity;
 }
 
-/* visible state applied by JS */
-.advertiser-column .feature-list li.visible,
-.publishers-column .feature-list li.visible {
-  opacity: 1;
-  transform: translateY(0);
+/* Advertiser/Publisher bullet points: only hidden, no animation by default */
+.advertiser-column .feature-list li,
+.publishers-column .feature-list li {
+  opacity: 0;
+  transform: none;
+ transition: opacity 600ms cubic-bezier(.19, .71, .29, 1);
 }
 
-/* reduced-motion: show instantly */
-@media (prefers-reduced-motion: reduce) {
-  .advertiser-column .feature-list li,
-  .publishers-column .feature-list li {
-    transition: none;
-    opacity: 1;
-    transform: none;
-  }
+/* When JS adds this class, bullets just "pop in" (no fade/slide) */
+.advertiser-column .feature-list li.bullet-visible,
+.publishers-column .feature-list li.bullet-visible {
+  opacity: 1;
 }
+
 
 /* subtle hover lift */
 .advertiser-column:hover,
 .publishers-column:hover {
   transform: translateY(-5px);
  box-shadow: 
-    0 0 12px rgba(10, 248, 249, 0.65),
-    0 0 24px rgba(10, 248, 249, 0.55),
-    0 0 48px rgba(10, 248, 249, 0.38),
-    0 8px 24px rgba(15, 23, 36, 0.18);
+    0 0 10px rgba(10, 248, 249, 0.28),
+  0 0 18px rgba(10, 248, 249, 0.22),
+  0 0 36px rgba(10, 248, 249, 0.15),
+  0 6px 18px rgba(15, 23, 36, 0.12);
 }
 
 .column-cta {
@@ -530,119 +620,131 @@ pointer-events: auto;
 
 .column-cta.btn {
   padding: 8px 55px; /* narrower button */
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
-/* ---------------- Services alignment animation ---------------- */
 .services-section {
+  padding: 70px 0 30px;      /* extra bottom so last card can finish stacking */
+  text-align: center;
+  background: #F5F5F5;
   position: relative;
-  padding: 50px 0;
   overflow: visible;
 }
 
-/* .services-section .section-sub {
-  margin-bottom: 18px;
-  color: var(--text-muted);
-} */
-
-/* layout of cards (grid by default, will remain responsive) */
-.services-viewport {
-  position: relative;
-  z-index: 1;
-  perspective: 900px; 
-
-}
-  
-.services-track {
-  transition: all 600ms cubic-bezier(.2, .9, .2, 1);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* wider base */
-  align-items:start;
-  justify-items:center;
-  padding: 28px 40px; 
-}
-
-/* card base */
-.svc-card {
-  width: 100%;
-  max-width: 280px;
-  min-width: 280px;
-  height: 350px;
-  perspective: 1200px;
-  cursor: default;
-  will-change: transform;
-   opacity: 0;
-  transition: box-shadow 240ms ease, opacity 360ms ease;
-  display: block;
-  position: relative;
-  backface-visibility: hidden;
-}
-
-/* inner card styling */
-.svc-card-inner {
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  will-change: transform, opacity;
-  border-radius: 20px;
-  background: linear-gradient(180deg, #fafafa 0%, #f2f4f5 100%);
-  border: 2px solid  rgba(10, 248, 249, 0.35);  /* base gray */
-  
-
-  /* layered depth + neon micro glow */
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.05),            /* crisp top definition */
-    0 4px 10px rgba(0, 0, 0, 0.06),           /* depth shadow */
-    0 0 6px rgba(10, 248, 249, 0.22); 
-  padding: 22px;
-  display: flex;
-  cursor: default;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-}
-
-/* Subtle lift and glow on hover */
-.svc-card-inner:hover {
-  transform: translateY(-10px);
-  border-color: rgba(10, 248, 249, 0.35);
-  box-shadow: 
-    0 0 12px rgba(10, 248, 249, 0.65),
-    0 0 24px rgba(10, 248, 249, 0.55),
-    0 0 48px rgba(10, 248, 249, 0.38),
-    0 8px 24px rgba(15, 23, 36, 0.18);
-  /* background: linear-gradient(135deg, #f4ffff 0%, #eaffff 100%); */
-  
-  transition: transform .3s ease, box-shadow .3s ease, background .3s ease, border-color .3s ease;
-
-}
-
-/* Headings and text inside */
-.svc-card h3 {
-  margin: 0 0 6px;
+.services-section h2 {
+  font-size: 2rem;
+  margin: -30px 0 8px;
   color: var(--light-title);
-  font-size: 1.15rem;
+}
+
+/* ==================== IION.IO-STYLE STACKED CARD EFFECT ==================== */
+/* Keep your existing .service-pill base styles, then ADD/REPLACE with this: */
+
+.services-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 0 50px; /* generous bottom padding so last card has room to reveal */
+  perspective: 1500px;   /* adds subtle 3D depth */
+}
+
+.service-pill {
+  position: sticky;
+  top: 100px;
+  width: 90%;
+  height: 500px;                 /* ← iion.io height */
+  margin: 0 auto 60px;
+  padding: 60px 48px;            /* increased padding for breathing room */
+  display: flex;
+  align-items: center;
+  gap: 32px;
+ /* Match service pills border + depth to advertiser/publisher */
+  border: 1px solid rgba(255,255,255,0.65) !important; /* same light border */
+background: linear-gradient(180deg, #f1f3f3 0%, #e4e8ea 100%);
+
+ /* same bg */
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),    /* same top crisp shadow */
+    0 4px 10px rgba(0, 0, 0, 0.06),   /* same soft depth */
+    0 0 6px rgba(10, 248, 249, 0.22); /* same subtle neon glow */
+    border-radius: 32px;
+  transform: translateY(60px) rotateX(12deg) scale(0.94);
+  opacity: 0.92;
+  transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* When in viewport → full reveal (exactly like iion.io) */
+.service-pill.in-view {
+  opacity: 1;
+  transform: translateY(0) rotateX(0deg) scale(1);
+  box-shadow: 
+      0 0 10px rgba(10, 248, 249, 0.28),
+    0 0 18px rgba(10, 248, 249, 0.22),
+    0 0 36px rgba(10, 248, 249, 0.15),
+    0 12px 28px rgba(0, 0, 0, 0.08),
+     inset 0 4px 6px rgba(255, 255, 255, 0.28),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Hover lift — matches iion exactly */
+.service-pill:hover {
+  transform: translateY(-12px) scale(1.02);
+}
+
+/* Z-index stacking (keep your existing nth-child rules, but boost them slightly) */
+.services-row .service-pill:nth-child(1) { z-index: 5; }
+.services-row .service-pill:nth-child(2) { z-index: 6; }
+.services-row .service-pill:nth-child(3) { z-index: 7; }
+.services-row .service-pill:nth-child(4) { z-index: 8; }
+
+/* Optional: subtle parallax tilt on scroll (pure CSS — no JS needed) */
+.service-pill {
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s ease;
+}
+
+/* Reduced motion fallback */
+@media (prefers-reduced-motion: reduce) {
+  .service-pill,
+  .service-pill.in-view {
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+}
+
+/* Icon */
+.service-pill img {
+  height: 60px;
+  width: 60px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Text container */
+.service-text {
+  text-align: left;
+}
+
+.service-text h4 {
+  font-size: 1.8rem;
+  margin: 0 0 4px;
   font-weight: 700;
-  letter-spacing: 0.3px;
+  color: var(--light-title);
 }
 
-.svc-card p {
-  color: var(--light-muted);
-  line-height: 1.55;
+.service-text p {
   margin: 0;
-  font-weight: 500;
-  font-size: 0.96rem;
+  font-size: 1.1rem;
+  color: var(--light-muted);
 }
-
 
 /* footer */
 /* ===== Footer (enhanced) ===== */
 .site-footer {
   margin-top: 0px;
-   background: linear-gradient(180deg, var(--surface), var(--bg) 80%);
-  color: var(--text-dark);
-  /* border-top: 1px solid var(--border); */
+  background:linear-gradient(135deg, #1dd1df 0%, #26eaf4 100%);
+    color: var(--text-dark);
+  border-top: 1px solid var(--border);
   padding: 48px 0 20px;
 }
 
@@ -657,14 +759,15 @@ pointer-events: auto;
   font-family: Poppins, Inter, sans-serif;
   font-weight: 700;
   font-size: 22px;
-  color: var(--text-dark);
+  color: var(--light-title);
   text-decoration: none;
 }
 
 .footer-brand .tagline {
   margin: 10px 0 14px;
-  color: var(--text-muted);
+  color: var(--text-dark);
   line-height: 1.6;
+  font-weight: 600;
 }
 
 /* Social icons */
@@ -678,15 +781,15 @@ pointer-events: auto;
   justify-content: center;
   width: 36px; height: 36px;
   border-radius: 10px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--text-dark);
   color: var(--text-dark);
   text-decoration: none;
   transition: transform 160ms ease, border-color 160ms ease, color 160ms ease;
 }
 .social-links .social:hover {
   transform: translateY(-2px);
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--light-text);
+  color: var(--light-text);
 }
 
 /* Quick links */
@@ -694,19 +797,23 @@ pointer-events: auto;
 .footer-contact .footer-title {
   margin: 0 0 10px;
   font-size: 1rem;
-  color: var(--text-dark);
+  color: var(--light-text);
   pointer-events: none;
 }
 .footer-links ul {
-  list-style: none; padding: 0; margin: 0;
-  display: grid; gap: 8px;
+  list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 8px;
 }
 .footer-links a {
-  color: var(--text-muted);
+  color: var(--text-dark);
   text-decoration: none;
+  font-weight: 500;
 }
 .footer-links a:hover {
-   color: var(--accent-hover);
+   color: var(--light-text);
 }
 
 /* Contact / Offices */
@@ -717,7 +824,7 @@ pointer-events: auto;
 }
 .footer-contact .footer-mail,
 .footer-contact .footer-tel {
-  color: var(--text-dark);
+  color: var(--light-text);
   text-decoration: none;
   font-weight: 600;
 }
@@ -728,22 +835,23 @@ pointer-events: auto;
 .footer-contact .office h5 {
   margin: 15px 0 4px;
   font-size: 0.95rem;
-  color: var(--text-dark);
+  color: var(--light-text);
 }
 .office.second h5{
   margin-top: 30px;
 }
 .footer-contact address {
   font-style: normal;
-  color: var(--text-muted);
+  color: var(--text-dark);
   line-height: 1.5;
+  font-weight: bold;
 }
 
 /* Bottom bar */
 .footer-bottom {
   margin-top: 24px;
   padding-top: 16px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--accent);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -751,22 +859,21 @@ pointer-events: auto;
 }
 .footer-bottom p {
   margin: 0;
-  color: var(--text-muted);
+  color: var(--text-dark);
 }
 .legal-links {
   display: flex; gap: 14px;
 }
 .legal-links a {
-  color: var(--text-muted);
+  color: var(--text-dark);
   text-decoration: none;
 }
-.legal-links a:hover { color: var(--accent-hover); }
+.legal-links a:hover { color: var(--light-text); }
 
 /* ===== KPI Section (matches site palette & cards) ===== */
-/* ===== Compact KPI Section ===== */
 
 .kpi-section {
-  padding: 28px 0 38px;   /* very compact */
+  padding: 60px 0 38px;   /* very compact */
   background: var(--bg-1);
   position: relative;
   overflow: hidden;
@@ -790,7 +897,7 @@ pointer-events: auto;
   position: relative;
   z-index: 2;
   text-align: center;
-  padding-top: 4px;      /* minimal top space */
+  padding-top: 50px;      /* minimal top space */
 }
 
 /* Title */
@@ -798,18 +905,17 @@ pointer-events: auto;
   font-size: 2rem;
   font-weight: 700;
   color: var(--light-title);
-  margin-top: -2px; 
+  margin-top: -80px;
 
 }
 
-/* Sub text */
-.kpi-sub {
-  font-size: 1.05rem;
+/* .kpi-sub {
+  font-size: 1.2rem;
     font-weight: 500;
      color: var(--light-muted);
   max-width: 60ch;
-  margin: 0 auto 22px;   /* reduced space */
-}
+  margin: 0 auto 22px;  
+} */
 
 /* KPI stats grid */
 .kpi-grid {
@@ -817,6 +923,7 @@ pointer-events: auto;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 18px;             /* reduced */
   justify-items: center;
+  margin-top: 13%;
 }
 
 /* Each KPI item */
@@ -847,26 +954,11 @@ pointer-events: auto;
 /* KPI label */
 .kpi-box p {
   color: var(--light-muted);
-  font-size: 1.05em;    /* more compact */
+  font-size: 1.2rem;    /* more compact */
   margin: 0;
   font-weight: 500;
 }
-#glow-dot {
-  position: fixed;
-  z-index: 1200;
-  pointer-events: none;
-  top: 0;
-  left: 0;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(1);
-  will-change: transform, opacity;
-  transition: background-color 260ms linear, box-shadow 260ms linear, opacity 220ms linear;
-  opacity: 0;
-  background: transparent;
-  box-shadow: 0 0 14px 6px rgba(10, 248, 249, 0.06)
-}
+
 /* === Minimal glowy dot (follows pointer) === */
 
 

@@ -1,507 +1,368 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const hasGSAP = typeof window.gsap !== 'undefined';
-  const hasST = typeof window.ScrollTrigger !== 'undefined';
+document.addEventListener("DOMContentLoaded", function () {
+  /* ================== MOTION PREFERENCE ================== */
+  const prefersReducedMotion =
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Register ScrollTrigger only if present
-  if (hasGSAP && hasST) {
-    gsap.registerPlugin(ScrollTrigger);
-  } else if (hasGSAP && !hasST) {
-    // console.warn('ScrollTrigger is not loaded. Include it before this script.');
-  }
+  /* ================== HERO DYNAMIC WORDS ================== */
+  const words = document.querySelectorAll(".dynamic-text .word");
+  let currentIndex = 0;
 
-  // ---------------------------
-  // 1) Hero word rotation (simple)
-  // ---------------------------
-  (function heroWords() {
-    const wrap = document.querySelector('.dynamic-word-wrap');
-    if (!wrap) return;
-    const wordEl = wrap.querySelector('.dynamic-word');
-    if (!wordEl) return;
+  function showNextWord() {
+    if (words.length === 0) return;
 
-    const words = ['Audiences', 'Publishers', 'Markets'];
-    let index = words.indexOf(wordEl.textContent?.trim());
-    if (index < 0) index = 0;
+    const currentWord = words[currentIndex];
+    const nextIndex = (currentIndex + 1) % words.length;
+    const nextWord = words[nextIndex];
 
-    // Reserve width to prevent layout jump
-    try {
-      const measure = document.createElement('span');
-      measure.style.visibility = 'hidden';
-      measure.style.position = 'absolute';
-      measure.style.whiteSpace = 'nowrap';
-      measure.style.font = window.getComputedStyle(wordEl).font;
-      document.body.appendChild(measure);
-      let maxW = 0;
-      words.forEach(w => {
-        measure.textContent = w;
-        maxW = Math.max(maxW, measure.getBoundingClientRect().width);
+    if (window.anime && !prefersReducedMotion) {
+      anime({
+        targets: currentWord,
+        translateY: [0, -80],
+        opacity: [1, 0],
+        easing: "easeOutExpo",
+        duration: 600
       });
-      document.body.removeChild(measure);
-      wrap.style.minWidth = `${Math.ceil(maxW)}px`;
-      wrap.style.position = 'relative';
-    } catch (_) {}
 
-    // Reduced-motion or missing GSAP: simple swap
-    if (prefersReduced || !hasGSAP) {
-      setInterval(() => {
-        index = (index + 1) % words.length;
-        wordEl.textContent = words[index];
-      }, 1000);
-      return;
-    }
-
-    // Smooth crossfade with a tiny timeline
-    const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.8 });
-    tl.to(wordEl, { duration: 0.3, opacity: 0, x: -10, ease: 'power2.in' })
-      .add(() => {
-        index = (index + 1) % words.length;
-        wordEl.textContent = words[index];
-      })
-      .to(wordEl, { duration: 0.5, opacity: 1, x: 0, ease: 'power3.out' });
-
-    // Pause on hover/focus
-    wrap.addEventListener('mouseenter', () => tl.pause());
-    wrap.addEventListener('mouseleave', () => tl.play());
-    wrap.addEventListener('focusin',   () => tl.pause());
-    wrap.addEventListener('focusout',  () => tl.play());
-  })();
-
-  // ---------------------------
-  // 2) Simple marquee for logos
-  // ---------------------------
-  (function marquee() {
-    const track = document.querySelector('.marquee-track');
-    if (!track) return;
-
-    if (prefersReduced || !hasGSAP) return;
-
-    const items = Array.from(track.children);
-    if (!items.length) return;
-
-    const half = Math.floor(items.length / 2) || items.length;
-
-    function computeHalfWidth() {
-      let total = 0;
-      for (let i = 0; i < half; i++) {
-        const el = items[i];
-        const r = el.getBoundingClientRect();
-        const style = window.getComputedStyle(el);
-        const mr = parseFloat(style.marginRight || 0);
-        total += r.width + mr;
-      }
-      return total || track.scrollWidth / 2;
-    }
-
-    let width = computeHalfWidth();
-    if (!width) return;
-
-    const duration = Math.max(10, Math.round(width / 60));
-    let tween = gsap.to(track, {
-      x: `-=${Math.round(width)}px`,
-      ease: 'none',
-      duration,
-      repeat: -1
-    });
-
-    const parent = track.parentElement || track;
-    parent.addEventListener('mouseenter', () => tween.pause());
-    parent.addEventListener('mouseleave', () => tween.play());
-    parent.addEventListener('focusin',    () => tween.pause());
-    parent.addEventListener('focusout',   () => tween.play());
-
-    // Recompute on resize (debounced)
-    let resizeTimer = null;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        const newWidth = computeHalfWidth();
-        if (Math.abs(newWidth - width) > 4) {
-          width = newWidth;
-          tween.kill();
-          const newDuration = Math.max(8, Math.round(width / 60));
-          tween = gsap.to(track, {
-            x: `-=${Math.round(width)}px`,
-            ease: 'none',
-            duration: newDuration,
-            repeat: -1
-          });
+      anime({
+        targets: nextWord,
+        translateY: [80, 0],
+        opacity: [0, 1],
+        easing: "easeOutExpo",
+        duration: 700,
+        delay: 250,
+        complete: () => {
+          currentIndex = nextIndex;
         }
-      }, 120);
-    });
-  })();
-
-  // ========== 3) Video grow on scroll (GSAP + ScrollTrigger) ==========
-  (function videoGrowOnScroll() {
-    if (!hasGSAP || !hasST) return;
-
-    const videoInner = document.querySelector('.video-inner');
-    if (!videoInner) return;
-
-    videoInner.style.transformOrigin = 'center center';
-
-    gsap.to(videoInner, {
-      width: '90%',
-      ease: 'none',
-      scrollTrigger: {
-        trigger: videoInner,
-        start: 'top center',
-        end: '+=30%',
-        scrub: 0.6,
-        invalidateOnRefresh: true,
-        // scroller: '.your-custom-scroller', // uncomment if you use a custom scroll container
-        // markers: true,
-      }
-    });
-  })();
-
-  // ---------------------------
-  // 4) small helper: set current year in footer (id="year")
-  // ---------------------------
-  (function setYear() {
-    const y = document.getElementById('year');
-    if (y) y.textContent = new Date().getFullYear();
-  })();
-
-  // ====================== 5) SERVICES ANIMATIONS (Combo B — scrubbed) ======================
- // ====================== SERVICES — Curtain Drop (downward only) + Idle Float ======================
-// ====================== SERVICES — Curtain Drop (downward only) ======================
-(function servicesWaveRevealIdleFloat() {
-  const hasGSAP = typeof window.gsap !== 'undefined';
-  const hasST   = typeof window.ScrollTrigger !== 'undefined';
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!hasGSAP || !hasST) return;
-
-  const section = document.querySelector('.services-section');
-  if (!section) return;
-
-  const cards = gsap.utils.toArray('.services-section .svc-card');
-  if (!cards.length) return;
-
-  // Clean services-only triggers/tweens
-  ScrollTrigger.getAll().forEach(st => {
-    if (st.trigger?.closest?.('.services-section')) st.kill();
-  });
-  gsap.killTweensOf(cards);
-  gsap.killTweensOf('.services-section .svc-card-inner');
-
-  // ---------- Tuned settings ----------
-  const INTENSITY    = 1.4;   // master multiplier
-  const BASE_DROP    = -150;  // start higher above
-  const BASE_PEEK    = 10;    // impact dip
-  const BASE_SPREAD  = 0.7;   // wave spacing (radians)
-  const DURATION     = 1.5;   // slower curtain drop
-  const STAGGER_EACH = 0.06;  // wave cadence
-
-  const DROP_FROM   = BASE_DROP * INTENSITY;
-  const LAND_PEEK   = BASE_PEEK * INTENSITY;
-  const WAVE_SPREAD = BASE_SPREAD;
-
-  // Perf hints
-  gsap.set(cards, { willChange: 'transform', transformPerspective: 800 });
-
-  // ------ 1) Entrance: Curtain drop (downward only) ------
-  function setPreState() {
-    gsap.set(cards, {
-      opacity: 0,
-      y: (i) => DROP_FROM + Math.sin(i * WAVE_SPREAD) * (14 * INTENSITY),
-      scale: 0.98
-    });
-  }
-  setPreState();
-
-  function buildRevealTL() {
-    const tl = gsap.timeline({ paused: true });
-
-    // Curtain drop
-    tl.to(cards, {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      ease: 'expo.out',
-      duration: DURATION,
-      stagger: { each: STAGGER_EACH, from: 'center' } // 'start' for L→R
-    });
-
-    // Impact dip & settle
-    tl.to(cards, {
-      y: (i) => LAND_PEEK + Math.sin(i * WAVE_SPREAD) * 2,
-      ease: 'sine.out',
-      duration: 0.22,
-      stagger: { each: STAGGER_EACH, from: 'center' }
-    }, '-=0.95'); // overlap for punch
-
-    tl.to(cards, {
-      y: 0,
-      ease: 'back.out(1.4)',
-      duration: 0.36,
-      stagger: { each: STAGGER_EACH, from: 'center' }
-    }, '>-0.02');
-
-    return tl;
-  }
-  let revealTL = buildRevealTL();
-
-  // ------ 2) ScrollTrigger (downward only trigger, video-like behavior) ------
-  ScrollTrigger.create({
-    trigger: section,
-    start: 'top 62%',        // starts a bit later in the viewport
-    // no 'end' → acts as a gate like your video
-    toggleActions: 'play none none reset', // play on scroll down, reset when scrolling back above
-    onEnter: () => {
-      if (prefersReduced) {
-        gsap.to(cards, {
-          opacity: 1, y: 0, scale: 1,
-          ease: 'power2.out', duration: 0.6,
-          stagger: { each: 0.05, from: 'start' }
-        });
-      } else {
-        setPreState();
-        revealTL.invalidate().restart(true);
-      }
-    },
-    onEnterBack: () => {
-      // Scroll up into section — show instantly, no animation
-      gsap.set(cards, { opacity: 1, y: 0, scale: 1 });
-    },
-    onLeaveBack: () => {
-      // When scrolling back above the section, reset so it replays next downward scroll
-      setPreState();
-    },
-    invalidateOnRefresh: true,
-    // scroller: '.your-custom-scroller',
-    // markers: true, // uncomment for debugging
-  });
-
-  // Keep ScrollTrigger fresh on load
-  window.addEventListener('load', () => ScrollTrigger.refresh());
-})();
-
-// SIMPLE KPI Count-up — beginner friendly
-(function simpleKpiCountUp() {
-  // Config - tweak these
-  const DURATION = 600;        // ms for each number
-  const STAGGER = 80;          // ms between items (0 => all at once)
-  const USE_ABBREV = true;     // true => 1.2K / 3.4M etc.
-  const PREFERS_REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const section = document.querySelector('#kpis');
-  if (!section) return;
-  const items = Array.from(section.querySelectorAll('.kpi-number'));
-  if (!items.length) return;
-
-  // parse a text like "+500M+" => { prefix: '+', num: 500000000, suffix: '+', decimals: 0 }
-  function parseLabel(text) {
-    const match = text.match(/([+\-]?\d{1,3}(?:[,\d]*)(?:\.\d+)?|\d+(?:\.\d+)?)/);
-    if (!match) return { prefix: '', num: 0, suffix: text.trim(), decimals: 0 };
-    const token = match[0];
-    const i = text.indexOf(token);
-    const prefix = text.slice(0, i);
-    const suffix = text.slice(i + token.length);
-    const num = parseFloat(token.replace(/,/g, '')) || 0;
-    const decimals = token.includes('.') ? token.split('.')[1].length : 0;
-    return { prefix, num, suffix, decimals };
-  }
-
-  // abbreviate e.g. 1200 -> "1.2K", 1_500_000 -> "1.5M"
-  function abbreviate(n, decimals) {
-    const abs = Math.abs(n);
-    if (abs >= 1e9) return (n / 1e9).toFixed(Math.min(2, Math.max(0, decimals || 1))) + 'B';
-    if (abs >= 1e6) return (n / 1e6).toFixed(Math.min(2, Math.max(0, decimals || 1))) + 'M';
-    if (abs >= 1e3) return (n / 1e3).toFixed(Math.min(1, Math.max(0, decimals || 0))) + 'K';
-    return decimals > 0 ? n.toFixed(decimals) : Math.round(n).toLocaleString();
-  }
-
-  function formatValue(value, decimals) {
-    return USE_ABBREV ? abbreviate(value, decimals) : (decimals > 0 ? Number(value).toFixed(decimals) : Math.round(value).toLocaleString());
-  }
-
-  // ease out quad
-  function easeOutQuad(t) { return 1 - (1 - t) * (1 - t); }
-
-  // animate single element from 0 -> target using requestAnimationFrame
-  function animateElement(el, parsed, duration) {
-    if (PREFERS_REDUCED) {
-      // show final instantly for reduced-motion users
-      el.textContent = parsed.prefix + formatValue(parsed.num, parsed.decimals) + parsed.suffix;
-      return;
-    }
-    const start = performance.now();
-    function step(now) {
-      const t = Math.min(1, (now - start) / duration);
-      const eased = easeOutQuad(t);
-      const value = parsed.num * eased;
-      el.textContent = parsed.prefix + formatValue(value, parsed.decimals) + parsed.suffix;
-      if (t < 1) requestAnimationFrame(step);
-      else {
-        // ensure exact final value
-        el.textContent = parsed.prefix + formatValue(parsed.num, parsed.decimals) + parsed.suffix;
-      }
-    }
-    requestAnimationFrame(step);
-  }
-
-  // IntersectionObserver to trigger when #kpis is visible
-  const obs = new IntersectionObserver((entries, o) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      // animate items with a small stagger
-      items.forEach((el, i) => {
-        if (el.dataset.kpiDone === '1') return; // don't re-animate
-        el.dataset.kpiDone = '1';
-        const parsed = parseLabel(el.textContent.trim());
-        setTimeout(() => animateElement(el, parsed, DURATION), i * STAGGER);
       });
-      o.unobserve(entry.target); // run once
+    } else {
+      currentWord.style.opacity = 0;
+      nextWord.style.opacity = 1;
+      currentIndex = nextIndex;
+    }
+  }
+
+  if (words.length > 0) {
+    words.forEach((w, i) => {
+      w.style.opacity = i === 0 ? 1 : 0;
+      w.style.transform = "translateY(0)";
     });
-  }, { threshold: 0.7 });
 
-  obs.observe(section);
-})();
-// STAGGERED REVEAL for advertiser & publisher points
-(function columnPointsStagger() {
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const STAGGER_MS = 110; // change to 70 for snappier, 160 for slower
+    if (!prefersReducedMotion) {
+      setInterval(showNextWord, 2800);
+    }
+  }
 
-  // select the two columns already in your markup
-  const blocks = document.querySelectorAll('.advertiser-column, .publishers-column');
-  if (!blocks.length) return;
+  /* ================== SERVICES SCROLL-IN (CARDS) ================== */
+  const serviceCards = document.querySelectorAll(".service-pill");
 
-  function revealPoints(container) {
-    const points = Array.from(container.querySelectorAll('.feature-list li'));
-    if (!points.length) return;
+  if (serviceCards.length > 0) {
+    if (prefersReducedMotion) {
+      serviceCards.forEach((card) => card.classList.add("in-view"));
+    } else if ("IntersectionObserver" in window) {
+      const cardObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const card = entry.target;
+              const index = Array.from(serviceCards).indexOf(card);
+              setTimeout(() => {
+                card.classList.add("in-view");
+              }, index * 200);
+              cardObserver.unobserve(card);
+            }
+          });
+        },
+        {
+          threshold: 0.25
+        }
+      );
 
-    if (prefersReduced) {
-      points.forEach(p => p.classList.add('visible'));
-      return;
+      serviceCards.forEach((card) => cardObserver.observe(card));
+    } else {
+      serviceCards.forEach((card) => card.classList.add("in-view"));
+    }
+  }
+
+  /* ================== HELPER: SECTION PROGRESS ================== */
+
+  function getSectionProgress(sectionEl) {
+    const rect = sectionEl.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+
+    const maxDistance = rect.height + vh;
+    const distance = vh - rect.top;
+    let progress = distance / maxDistance;
+
+    if (progress < 0) progress = 0;
+    if (progress > 1) progress = 1;
+    return progress; // 0 → 1
+  }
+
+  /* ================== BLOB SCROLL + MORPH ================== */
+
+  if (!prefersReducedMotion && window.anime) {
+    // collect all hero-blob svgs that are linked to a section
+    const blobSvgs = document.querySelectorAll(".hero-blob[data-section]");
+    const blobs = [];
+
+    blobSvgs.forEach((svg) => {
+      const sectionSelector = svg.getAttribute("data-section");
+      const section = document.querySelector(sectionSelector);
+      if (!section) return;
+
+      const direction = svg.getAttribute("data-direction") || "center";
+      const pathEl = svg.querySelector(".blob-path");
+      if (!pathEl) return;
+
+      const d1 = pathEl.getAttribute("d");
+      const d2 = pathEl.getAttribute("data-alt-shape") || d1;
+
+      const morphAnim = anime({
+        targets: pathEl,
+        d: [d1, d2],
+        easing: "easeInOutQuad",
+        duration: 1700,
+        direction: "alternate",
+        loop: true,
+        autoplay: false
+      });
+
+      blobs.push({
+        svg,
+        section,
+        direction,
+        morphAnim
+      });
+    });
+
+    // Start/stop morph when section is visible
+    if (blobs.length > 0 && "IntersectionObserver" in window) {
+      const sectionObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            blobs
+              .filter((b) => b.section === entry.target)
+              .forEach((blob) => {
+                if (entry.isIntersecting) {
+                  blob.morphAnim.play();
+                } else {
+                  blob.morphAnim.pause();
+                }
+              });
+          });
+        },
+        { threshold: 0.2 }
+      );
+
+      // observe each unique section
+      const uniqueSections = [...new Set(blobs.map((b) => b.section))];
+      uniqueSections.forEach((sec) => sectionObserver.observe(sec));
     }
 
-    points.forEach((p, i) => {
-      // avoid re-animating same item
-      if (p.dataset.revealed === '1') return;
+    // Parallax / position change on scroll
+    function updateBlobParallax() {
+      blobs.forEach((blob) => {
+        const p = getSectionProgress(blob.section); // 0 → 1
+
+        // vertical travel
+        const maxY = 180;
+        const offsetY = (p - 0.5) * 2 * maxY; // -maxY → +maxY
+
+        // horizontal drift based on direction
+        const maxX =140;
+        let offsetX = 0;
+        if (blob.direction === "left") {
+          offsetX = -(p * maxX);
+        } else if (blob.direction === "right") {
+          offsetX = p * maxX;
+        }
+
+        blob.svg.style.setProperty("--blob-offset-y", offsetY.toFixed(1) + "px");
+        blob.svg.style.setProperty("--blob-offset-x", offsetX.toFixed(1) + "px");
+      });
+    }
+
+    updateBlobParallax();
+    window.addEventListener("scroll", () => {
+      requestAnimationFrame(updateBlobParallax);
+    });
+    window.addEventListener("resize", () => {
+      requestAnimationFrame(updateBlobParallax);
+    });
+  }
+   const kpiSection = document.querySelector(".kpi-section");
+  const kpiValues = kpiSection
+    ? Array.from(kpiSection.querySelectorAll(".kpi-box h3"))
+    : [];
+
+  if (
+    kpiSection &&
+    kpiValues.length > 0 &&
+    window.anime &&
+    !prefersReducedMotion
+  ) {
+    let hasAnimatedKpis = false; // runs once per page load
+
+    function animateKpis() {
+      kpiValues.forEach((el) => {
+        const original =
+          el.getAttribute("data-original-text") || el.textContent.trim();
+
+        if (!el.hasAttribute("data-original-text")) {
+          el.setAttribute("data-original-text", original);
+        }
+
+        const isBn = /BN\+?/i.test(original);
+        const numberMatch = original.match(/[\d.,]+/);
+
+        if (!numberMatch) return;
+
+        const targetNumber = parseFloat(numberMatch[0].replace(/,/g, ""));
+        if (isNaN(targetNumber)) return;
+
+        // suffix: everything except the digits / commas / dot
+        const suffix = isBn
+          ? " BN+"
+          : original.replace(/[\d.,]+/g, "").trim();
+
+        const counter = { value: 0 };
+
+        anime({
+          targets: counter,
+          value: targetNumber,
+          duration: isBn ? 2600 : 2200, // slower than before
+          easing: "easeOutQuad",
+          update() {
+            if (isBn) {
+              // show one decimal so it feels like it's moving: 0.0 → 1.0 BN+
+              const displayVal = counter.value.toFixed(1);
+              el.textContent = displayVal + suffix;
+            } else {
+              const current = Math.round(counter.value);
+              el.textContent = current.toLocaleString() + (suffix ? " " + suffix : "");
+            }
+          }
+        });
+      });
+    }
+
+    if ("IntersectionObserver" in window) {
+      const kpiObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !hasAnimatedKpis) {
+              hasAnimatedKpis = true;
+              animateKpis();
+            }
+          });
+        },
+        { threshold: 0.35 }
+      );
+
+      kpiObserver.observe(kpiSection);
+    } else {
+      // fallback: animate immediately
+      animateKpis();
+    }
+  }
+  /* ================== ADVERTISER / PUBLISHER HEADING + POINTS ================== */
+
+  const advertisersSection = document.querySelector("#advertisers");
+  const advertiserCol = document.querySelector(".advertiser-column");
+  const publisherCol = document.querySelector(".publishers-column");
+
+  function showColumnInstant(colEl) {
+    if (!colEl) return;
+    const title = colEl.querySelector(".column-title");
+    const items = colEl.querySelectorAll(".feature-list li");
+
+    if (title) {
+      title.style.opacity = "1";
+      title.style.transform = "none";
+    }
+    items.forEach((li) => {
+      li.classList.add("bullet-visible");
+    });
+  }
+
+  // Show bullets one by one, like new lines appearing (no fade/slide)
+  function revealBulletsLineByLine(colEl) {
+    if (!colEl) return;
+    const items = colEl.querySelectorAll(".feature-list li");
+
+    items.forEach((li, index) => {
       setTimeout(() => {
-        p.classList.add('visible');
-        p.dataset.revealed = '1';
-      }, i * STAGGER_MS);
+        li.classList.add("bullet-visible"); // instantly visible
+      }, index * 350); // gap between points (350ms, tweak if you want slower/faster)
     });
   }
 
-  const obs = new IntersectionObserver((entries, o) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      revealPoints(entry.target);
-      // run once per block — comment this out to animate again on re-entry
-      o.unobserve(entry.target);
-    });
-  }, {
-    threshold: 0.28,
-    rootMargin: '0px 0px -20% 0px' // fires a little later (when block is lower in viewport)
-  });
+  if (advertisersSection && advertiserCol && publisherCol) {
+    if (
+      prefersReducedMotion ||
+      !window.anime ||
+      !("IntersectionObserver" in window)
+    ) {
+      // No fancy animation → just show everything
+      showColumnInstant(advertiserCol);
+      showColumnInstant(publisherCol);
+    } else {
+      function animateColumn(colEl) {
+        const title = colEl.querySelector(".column-title");
 
-  blocks.forEach(b => obs.observe(b));
-})();
-// === tiny glowy dot that toggles between rgb(0,119,237) and #ebc500 ===
- (function createGlowDot() {
-  const COLORS = ['rgb(0,119,237)', '#ebc500', '#00E5FF', '#FF2EC4', '#7CFF00', '#FF7A00'];
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReduced) return;
+        if (!title) {
+          revealBulletsLineByLine(colEl);
+          return;
+        }
 
-  let dot = document.getElementById('glow-dot');
-  if (!dot) {
-    dot = document.createElement('div');
-    dot.id = 'glow-dot';
-    document.body.appendChild(dot);
-  }
+        // Heading: smooth slide + fade using anime.js
+        anime({
+          targets: title,
+          translateY: [24, 0],
+          opacity: [0, 1],
+          duration: 900,
+          easing: "easeOutCubic",
+          complete: () => {
+            // After heading is in, reveal bullets line by line (no fade/slide)
+            revealBulletsLineByLine(colEl);
+          }
+        });
+      }
 
-  function hexAlphaFallback(col, alpha) {
-    if (col.startsWith('rgb')) {
-      return col.replace('rgb(', 'rgba(').replace(')', `, ${alpha})`);
+      let hasAnimatedAdvertiser = false;
+      let hasAnimatedPublisher = false;
+
+      const colObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+
+            if (entry.target === advertiserCol && !hasAnimatedAdvertiser) {
+              hasAnimatedAdvertiser = true;
+              animateColumn(advertiserCol);
+            }
+
+            if (entry.target === publisherCol && !hasAnimatedPublisher) {
+              hasAnimatedPublisher = true;
+              animateColumn(publisherCol);
+            }
+          });
+        },
+        {
+          threshold: 0.6 // start when ~60% of column is visible → not too early
+        }
+      );
+
+      colObserver.observe(advertiserCol);
+      colObserver.observe(publisherCol);
     }
-    try {
-      let hex = col.replace('#','');
-      if (hex.length === 3) hex = hex.split('').map(s=>s+s).join('');
-      const r = parseInt(hex.slice(0,2),16);
-      const g = parseInt(hex.slice(2,4),16);
-      const b = parseInt(hex.slice(4,6),16);
-      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-    } catch (e) {
-      return col;
-    }
   }
 
-  function setDotColor(color) {
-    dot.style.background = color;
-    dot.style.boxShadow = `0 0 18px 8px ${color}, 0 0 40px 18px ${hexAlphaFallback(color, 0.18)}`;
-  }
+  /* ================== FOOTER YEAR ================== */
 
-  // helper: pick a random color that is not the same as current
-  function pickRandomColor(exclude) {
-    if (!Array.isArray(COLORS) || COLORS.length === 0) return exclude || COLORS[0];
-    if (COLORS.length === 1) return COLORS[0];
-    let idx;
-    do {
-      idx = Math.floor(Math.random() * COLORS.length);
-    } while (COLORS[idx] === exclude);
-    return COLORS[idx];
-  }
-
-  let currentColor = COLORS[0];
-  setDotColor(currentColor);
-
-  let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-  let pos  = { x: mouse.x, y: mouse.y };
-  let idleTimeout = null;
-  const IDLE_MS = 900;
-  const CHANGE_CHANCE = 0.28;
-
-  function onMove(e) {
-    mouse.x = e.clientX; mouse.y = e.clientY;
-    dot.style.opacity = '1';
-
-    if (Math.random() < CHANGE_CHANCE) {
-      const newColor = pickRandomColor(currentColor);
-      currentColor = newColor;
-      setDotColor(newColor);
-    }
-
-    clearTimeout(idleTimeout);
-    idleTimeout = setTimeout(() => { dot.style.opacity = '0'; }, IDLE_MS);
-  }
-
-  window.addEventListener('pointermove', onMove, { passive: true });
-  window.addEventListener('pointerleave', () => { dot.style.opacity = '0'; }, { passive: true });
-
-  const hasGSAP = typeof window.gsap !== 'undefined';
-  if (hasGSAP) {
-    gsap.ticker.add(() => {
-      pos.x += (mouse.x - pos.x) * 0.18;
-      pos.y += (mouse.y - pos.y) * 0.18;
-      dot.style.transform = `translate(${pos.x}px, ${pos.y}px) translate(-50%, -50%)`;
-    });
-  } else {
-    function rafLoop() {
-      pos.x += (mouse.x - pos.x) * 0.18;
-      pos.y += (mouse.y - pos.y) * 0.18;
-      dot.style.transform = `translate(${pos.x}px, ${pos.y}px) translate(-50%, -50%)`;
-      requestAnimationFrame(rafLoop);
-    }
-    requestAnimationFrame(rafLoop);
-  }
-
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Tab') dot.style.opacity = '0';
-  });
-
-  window.__glowDot = {
-    setColor: (c) => { currentColor = c; setDotColor(c); },
-    show: () => { dot.style.opacity = '1'; },
-    hide: () => { dot.style.opacity = '0'; }
-  };
-})();
-
-  // Final: after all assets (images/fonts) load, recompute trigger positions
-  if (hasST) {
-    window.addEventListener('load', () => {
-      ScrollTrigger.refresh();
-    });
+  const yearSpan = document.getElementById("year");
+  if (yearSpan) {
+    yearSpan.textContent = new Date().getFullYear();
   }
 });
