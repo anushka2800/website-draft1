@@ -652,7 +652,8 @@ body {
   position: sticky;
   top: 100px;
   width: 90%;
-  height: 500px;                 /* ← iion.io height */
+ height: auto !important;
+  min-height: 500px;
   margin: 0 auto 60px;
   padding: 60px 48px;            /* increased padding for breathing room */
   display: flex;
@@ -695,6 +696,7 @@ background: linear-gradient(180deg, #f1f3f3 0%, #e4e8ea 100%);
 .services-row .service-pill:nth-child(2) { z-index: 6; }
 .services-row .service-pill:nth-child(3) { z-index: 7; }
 .services-row .service-pill:nth-child(4) { z-index: 8; }
+.services-row .service-pill:nth-child(5) { z-index: 9;}
 
 /* Optional: subtle parallax tilt on scroll (pure CSS — no JS needed) */
 .service-pill {
@@ -714,10 +716,13 @@ background: linear-gradient(180deg, #f1f3f3 0%, #e4e8ea 100%);
 
 /* Icon */
 .service-pill img {
-  height: 60px;
-  width: 60px;
-  object-fit: contain;
-  flex-shrink: 0;
+   width: 55%;
+ max-height: 340px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow:
+    0 8px 28px rgba(56, 73, 89, 0.04),
+    0 8px 25px rgba(56, 73, 89, 0.12);
 }
 
 /* Text container */
@@ -731,18 +736,57 @@ background: linear-gradient(180deg, #f1f3f3 0%, #e4e8ea 100%);
   font-weight: 700;
   color: var(--light-title);
 }
+/* ================= Programmatic Service Custom Styling ================= */
 
-.service-text p {
-  margin: 0;
+.service-text .service-desc {
   font-size: 1.1rem;
+  font-weight: 500;
   color: var(--light-muted);
+  margin-bottom: 16px;
+  line-height: 1.55;
+  max-width: 50ch;
+  text-align: justify;
 }
+
+.service-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.service-features li {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--light-muted);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 50ch;
+}
+
+.service-features .icon {
+  font-size: 1.3rem;
+  width: 28px;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 8px;
+  font-weight: 700;
+  /* background: linear-gradient(135deg, #0cd7e6, #14f0fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; */
+}
+
 
 /* footer */
 /* ===== Footer (enhanced) ===== */
 .site-footer {
   margin-top: 0px;
-  background:linear-gradient(135deg, #1dd1df 0%, #26eaf4 100%);
+  background: linear-gradient(135deg, #3ee3f1 0%, #5ef7ff 100%);
+   text-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.25),
+    0 0 6px rgba(20, 240, 250, 0.35);
     color: var(--text-dark);
   border-top: 1px solid var(--border);
   padding: 48px 0 20px;
@@ -869,6 +913,7 @@ background: linear-gradient(180deg, #f1f3f3 0%, #e4e8ea 100%);
   text-decoration: none;
 }
 .legal-links a:hover { color: var(--light-text); }
+
 
 /* ===== KPI Section (matches site palette & cards) ===== */
 
