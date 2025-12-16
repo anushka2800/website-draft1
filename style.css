@@ -18,12 +18,40 @@
       --gap: 20px;
       --page-padding: 20px;
 
+  --font-heading: "ABeeZee", sans-serif;
+
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+
      --c1: #ff007f;
   --c2: #ff7a00;
   --c3: #ffea00;
   --c4: #00ff9f;
   --c5: #00d4ff;
   --c6: #7a00ff;
+
+  
+}
+/* ===== Colorful Gradient Text (Industry Standard) ===== */
+.colorful-text {
+  display: inline-block;
+
+  background: linear-gradient(
+    180deg,
+    #ff006e,
+    #ff7a00,
+    #ffd600,
+    #00e5ff,
+    #7c4dff
+  );
+  background-size: 200% 200%;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+
+  -webkit-text-stroke: 0;
 }
 
 /* --------------- Reset & base --------------- */
@@ -39,7 +67,7 @@ body {
 
 body {
     margin: 0;
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+   font-family: var(--font-body);
     color: var(--text-dark);
   background:#F5F5F5;
     -webkit-font-smoothing: antialiased;
@@ -272,12 +300,14 @@ body {
   transform: translate(-50%, -50%);
   z-index: 10;
   text-align: center;
-  font-size: clamp(2.5rem, 3vw, 4.5rem);
+  font-size: clamp(2.3rem, 3vw, 4.3rem);
   line-height: 1.2;
   pointer-events: none;
   margin: 0;
   padding: 0 20px;
   width: 90%;
+    font-family: var(--font-heading);
+    letter-spacing: 0.04em; /* Cinzel needs spacing */
 }
 
 /* Both lines get the same vibrant moving gradient */
@@ -320,10 +350,10 @@ body {
 /* Dynamic word container */
 .dynamic-text {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
   overflow: hidden;
   vertical-align: bottom;
-  min-width: 160px; /* prevents jumping when words change length */
+  min-width: 180px; /* prevents jumping when words change length */
 }
 
 /* Individual rotating words */
@@ -368,18 +398,23 @@ body {
 }
 
 .clients-title{
-   font-size: 2rem;
+   font-size: 2.3rem;
     margin: -30px 0 8px;
-    color: var(--light-title);
+    /* color: var(--light-title); */
+    color: transparent;
+    font-family: var(--font-heading);
+    letter-spacing: 0.04em; /* Cinzel needs spacing */
 }
+
 .clients-sub {
   color: var(--light-text);
   margin: 0 0 20px;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   max-width: 64ch;
   font-weight: 500;
   margin-left: auto;
   margin-right: auto;
+ 
 }
 
 /* marquee base */
@@ -520,13 +555,14 @@ body {
     display: flex; 
     flex-direction: column; 
     justify-content: space-between;
+
 }
 
 /* Specific styling for column titles/text */
 .column-title {
-    font-size: 1.8rem;
+    font-size: 2rem;
     margin: 0 0 4px;
-    color: var(--light-title);
+    color:var(--light-title);
 }
 
 /* Feature list styling */
@@ -542,9 +578,9 @@ body {
     position: relative;
     padding-left: 20px;
     margin-bottom: 8px;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     font-weight: 500;
-     color: var(--light-muted);
+     color: var(--light-text);
 }
 
 .feature-list li::before {
@@ -568,14 +604,18 @@ body {
   background-size: 400% 400%;
   border: none;
   cursor: pointer;
-  background: linear-gradient(180deg, #fafafa 0%, #f2f4f5 100%);
+  background:#dbeafe; /* fallback solid color */
+  transform: scale(1);
+  /* Shadow: depth + seriousness */
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.05),            /* crisp top definition */
-    0 4px 10px rgba(0, 0, 0, 0.06),           /* depth shadow */
-    0 0 6px rgba(10, 248, 249, 0.22); 
-   transform: scale(0.9); /* reduces size slightly */
-  transform-origin: center;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+    0 2px 4px rgba(0, 0, 0, 0.12),
+    0 10px 28px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35); 
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.35s ease,
+    box-shadow 0.35s ease,
+    color 0.25s ease;
 }
 /* staggered reveal for advertiser/publisher points */
 /* Advertiser/Publisher headings: start hidden & slightly down */
@@ -584,6 +624,8 @@ body {
   opacity: 0;
   transform: translateY(16px);
   will-change: transform, opacity;
+   font-family: var(--font-heading);
+    letter-spacing: 0.04em; /* Cinzel needs spacing */
 }
 
 /* Advertiser/Publisher bullet points: only hidden, no animation by default */
@@ -599,17 +641,30 @@ body {
 .publishers-column .feature-list li.bullet-visible {
   opacity: 1;
 }
+.split-columns-grid:has(.split-column:hover)
+.split-column:not(:hover) {
+  transform: scale(0.92);
+  opacity: 0.85;
+}
+.split-column:hover {
+  transform: scale(1.08);
+  background: #3B82F6;
+  color: var(--accent-hover);
+  z-index: 5;
 
+  box-shadow:
+    0 12px 28px rgba(59, 130, 246, 0.45),
+    0 0 28px rgba(59, 130, 246, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.split-column:hover .column-title,
+.split-column:hover .feature-list li,
+.split-column:hover .btn {
+  color: var(--accent-hover);
+}
 
-/* subtle hover lift */
-.advertiser-column:hover,
-.publishers-column:hover {
-  transform: translateY(-5px);
- box-shadow: 
-    0 0 10px rgba(10, 248, 249, 0.28),
-  0 0 18px rgba(10, 248, 249, 0.22),
-  0 0 36px rgba(10, 248, 249, 0.15),
-  0 6px 18px rgba(15, 23, 36, 0.12);
+.split-column:hover .feature-list li::before {
+  -webkit-text-fill-color: var(--accent-hover);
 }
 
 .column-cta {
@@ -620,7 +675,7 @@ body {
 
 .column-cta.btn {
   padding: 8px 55px; /* narrower button */
-  font-size: 1.1rem;
+  font-size: 1.3rem;
 }
 
 .services-section {
@@ -632,9 +687,13 @@ body {
 }
 
 .services-section h2 {
-  font-size: 2rem;
+  font-size: 2.3rem;
+  letter-spacing: 0.04em;
   margin: -30px 0 8px;
-  color: var(--light-title);
+  /* color: var(--light-title); */
+  color: transparent;
+   font-family: var(--font-heading);
+    letter-spacing: 0.04em; /* Cinzel needs spacing */
 }
 
 /* ==================== IION.IO-STYLE STACKED CARD EFFECT ==================== */
@@ -651,7 +710,7 @@ body {
 .service-pill {
   position: sticky;
   top: 100px;
-  width: 90%;
+  width: 95%;
  height: auto !important;
   min-height: 500px;
   margin: 0 auto 60px;
@@ -661,13 +720,12 @@ body {
   gap: 32px;
  /* Match service pills border + depth to advertiser/publisher */
   border: 1px solid rgba(255,255,255,0.65) !important; /* same light border */
-background: linear-gradient(180deg, #f1f3f3 0%, #e4e8ea 100%);
-
+background:#8C80F6;
  /* same bg */
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.05),    /* same top crisp shadow */
-    0 4px 10px rgba(0, 0, 0, 0.06),   /* same soft depth */
-    0 0 6px rgba(10, 248, 249, 0.22); /* same subtle neon glow */
+      0 2px 4px rgba(0, 0, 0, 0.12),
+    0 14px 34px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);/* same subtle neon glow */
     border-radius: 32px;
   transform: translateY(60px) rotateX(12deg) scale(0.94);
   opacity: 0.92;
@@ -721,8 +779,14 @@ background: linear-gradient(180deg, #f1f3f3 0%, #e4e8ea 100%);
   object-fit: cover;
   border-radius: 16px;
   box-shadow:
-    0 8px 28px rgba(56, 73, 89, 0.04),
-    0 8px 25px rgba(56, 73, 89, 0.12);
+    /* outer depth */
+    0 10px 30px rgba(0, 0, 0, 0.35),
+
+    /* subtle inner highlight (top) */
+    inset 0 1px 2px rgba(255, 255, 255, 0.25),
+
+    /* subtle inner depth (bottom) */
+    inset 0 -3px 6px rgba(0, 0, 0, 0.35);
 }
 
 /* Text container */
@@ -731,17 +795,19 @@ background: linear-gradient(180deg, #f1f3f3 0%, #e4e8ea 100%);
 }
 
 .service-text h4 {
-  font-size: 1.8rem;
+  font-size: 2rem;
   margin: 0 0 4px;
   font-weight: 700;
-  color: var(--light-title);
+  color: var(--text-dark);
+   font-family: var(--font-heading);
+    letter-spacing: 0.04em; /* Cinzel needs spacing */
 }
 /* ================= Programmatic Service Custom Styling ================= */
 
 .service-text .service-desc {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   font-weight: 500;
-  color: var(--light-muted);
+  color: var(--accent-hover);
   margin-bottom: 16px;
   line-height: 1.55;
   max-width: 50ch;
@@ -757,9 +823,9 @@ background: linear-gradient(180deg, #f1f3f3 0%, #e4e8ea 100%);
 }
 
 .service-features li {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   font-weight: 500;
-  color: var(--light-muted);
+  color: var(--accent-hover);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -773,21 +839,207 @@ background: linear-gradient(180deg, #f1f3f3 0%, #e4e8ea 100%);
   line-height: 30px;
   border-radius: 8px;
   font-weight: 700;
-  /* background: linear-gradient(135deg, #0cd7e6, #14f0fa);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; */
+  background: rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* ===================== Events Section ===================== */
+
+.events-section {
+  padding: 70px 0;
+  text-align: center;
+}
+
+.events-section .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  
+}
+
+.events-title {
+  font-size: 2.3rem;
+  font-family: var(--font-heading);
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.events-sub {
+  color: var(--light-text);
+  margin: 0 0 40px;
+  font-size: 1.5rem;
+  max-width: 64ch;
+  font-weight: 500;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===== Carousel Wrapper ===== */
+.swiper {
+  width: 100%;
+}
+
+.swiper-wrapper {
+  align-items: stretch;
+}
+
+.swiper-slide {
+  height: auto;
+}
+
+/* ===== Horizontal Scroll Grid ===== */
+.events-grid {
+   display: flex;
+  gap: 36px;
+  padding: 20px 20px 40px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  cursor: grab;
+}
+
+.events-grid:active {
+  cursor: grabbing;
+}
+
+/* Hide scrollbar */
+.events-grid::-webkit-scrollbar {
+  display: none;
+}
+.events-grid {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* ===== Event Card ===== */
+.event-card {
+  background: linear-gradient(180deg, #f1f3f3 0%, #e4e8ea 100%);
+  border-radius: 20px;
+   padding: 32px 22px; 
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+margin: 20px 0px;
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.08),
+    0 12px 30px rgba(0, 0, 0, 0.06);
+
+  transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
 }
 
 
+/* ===== Hover ===== */
+.event-card:hover {
+  background: linear-gradient(135deg, #0cd7e6 0%, #14f0fa 100%);
+  transform: translateY(-8px);
+
+  box-shadow:
+    0 18px 40px rgba(20, 240, 250, 0.35),
+    0 0 32px rgba(20, 240, 250, 0.25);
+}
+
+/* ===== Top Row ===== */
+.event-top {
+  display: flex;
+   align-items: flex-start;
+  gap: 14px;
+}
+
+/* Date Block */
+.event-date {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #0cd7e6 0%, #14f0fa 100%);
+  color: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+}
+
+.event-date .day {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.event-date .month {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Small Image */
+.event-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.event-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===== Content ===== */
+.event-content h3 {
+  font-size: 1.25rem;
+  margin: 4px 0 6px;
+  font-family: var(--font-heading);
+  color: var(--light-title);
+  text-align: justify;
+  
+}
+
+.event-content p {
+  font-size: 1.1rem;
+  color: var(--light-text);
+  line-height: 1.55;
+  margin-bottom: 30px;
+  font-weight: 500;
+}
+
+.event-meta {
+  display: flex;
+  gap: 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
+}
+
+/* ===== Hover Text Colors ===== */
+.event-card:hover .event-content h3 {
+  color: #ffffff;
+}
+
+.event-card:hover .event-date {
+  background: #ffffff;
+}
+
+.event-card:hover .event-date,
+.event-card:hover .event-date .day,
+.event-card:hover .event-date .month {
+  color: var(--light-title);
+}
+.events-grid::before,
+.events-grid::after {
+  content: "";
+  flex: 0 0 18px;
+}
 /* footer */
 /* ===== Footer (enhanced) ===== */
 .site-footer {
   margin-top: 0px;
-  background: linear-gradient(135deg, #3ee3f1 0%, #5ef7ff 100%);
-   text-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.25),
-    0 0 6px rgba(20, 240, 250, 0.35);
-    color: var(--text-dark);
+  background: var(--light-title);
   border-top: 1px solid var(--border);
   padding: 48px 0 20px;
 }
@@ -800,10 +1052,10 @@ background: linear-gradient(180deg, #f1f3f3 0%, #e4e8ea 100%);
 }
 
 .footer-brand .logo-footer {
-  font-family: Poppins, Inter, sans-serif;
+  font-family: var(--font-heading);
   font-weight: 700;
   font-size: 22px;
-  color: var(--light-title);
+  color: var(--text-dark);
   text-decoration: none;
 }
 
@@ -841,7 +1093,7 @@ background: linear-gradient(180deg, #f1f3f3 0%, #e4e8ea 100%);
 .footer-contact .footer-title {
   margin: 0 0 10px;
   font-size: 1rem;
-  color: var(--light-text);
+  color: var(--text-dark);
   pointer-events: none;
 }
 .footer-links ul {
@@ -879,7 +1131,7 @@ background: linear-gradient(180deg, #f1f3f3 0%, #e4e8ea 100%);
 .footer-contact .office h5 {
   margin: 15px 0 4px;
   font-size: 0.95rem;
-  color: var(--light-text);
+  color: var(--text-dark);
 }
 .office.second h5{
   margin-top: 30px;
@@ -947,10 +1199,28 @@ background: linear-gradient(180deg, #f1f3f3 0%, #e4e8ea 100%);
 
 /* Title */
 .kpi-title {
-  font-size: 2rem;
+  font-size: 2.3rem;
   font-weight: 700;
-  color: var(--light-title);
+ background: linear-gradient(
+    180deg,
+    #ff006e,
+    #ff7a00,
+    #ffd600,
+    #00e5ff,
+    #7c4dff
+  );
+  background-size: 200% 200%;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+
+  -webkit-text-stroke: 0;
   margin-top: -80px;
+    font-family: var(--font-heading);
+    letter-spacing: 0.04em; /* Cinzel needs spacing */
 
 }
 

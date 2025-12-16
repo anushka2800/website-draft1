@@ -5,9 +5,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Adobrain</title>
+ <!-- <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Suez+One&display=swap" rel="stylesheet"> -->
+ <link href="https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Eczar:wght@400..800&display=swap" rel="stylesheet">
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@600;700&display=swap"
-    rel="stylesheet">
+ <!-- <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet"> -->
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@600;700&display=swap"
+    rel="stylesheet"> -->
+    <link
+  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -61,27 +67,16 @@
           <source src="./assets/1720522089_Homepagevideo.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
-
-        <!-- overlay that is clipped inside the rounded .hero-video box -->
         <div class="video-overlay" aria-hidden="true"></div>
       </div>
-      <!-- <h1 id="hero-heading" class="hero-title">
-        <span class="line-1">Connecting Premium Advertisers</span>
-        <span class="line-2">To High-Intent
-          <span class="dynamic-text">
-            <span class="word">Audiences</span>
-            <span class="word">Markets</span>
-            <span class="word">Publishers</span>
-          </span>
-        </span>
-      </h1> -->
     </section>
     <!-- ===== end hero ===== -->
 
 
     <!-- ===================== Clients section (paste after .video-grow-wrap) ===================== -->
-    <section class="clients-section" aria-labelledby="clients-heading">
-      <h2 id="clients-heading" class="clients-title">Our Clients</h2>
+    <section class="clients-section" aria-labelledby="clients-heading ">
+      <h2 id="clients-title" class="clients-title colorful-text">Our Clients</h2>
+
       <p class="clients-sub">We’ve partnered with brands across industries — trusted at scale</p>
 
       <!-- marquee -->
@@ -187,7 +182,7 @@
 
       <div class="container">
 
-        <h2 class="services-title">Our Services</h2>
+        <h2 class="services-title colorful-text">Our Services</h2>
         <p class="clients-sub">Helping brands achieve higher impact, reach and performance</p>
 
         <div class="services-row">
@@ -354,14 +349,115 @@
           </div>
         </div>
     </section>
+  
+  <!-- ===================== Events Section ===================== -->
+<section class="events-section">
+  <div class="container">
+    <h2 class="events-title colorful-text">Our Events</h2>
+    <p class="events-sub">Discover upcoming events and opportunities</p>
 
+    <!-- Swiper -->
+    <div class="swiper events-slider">
+      <div class="swiper-wrapper">
 
+        <!-- Card 1 -->
+        <div class="swiper-slide event-card">
+          <div class="event-top">
+            <div class="event-date">
+              <span class="day">12</span>
+              <span class="month">Aug</span>
+            </div>
+            <div class="event-thumb">
+              <img src="assets/event.jpg" alt="">
+            </div>
+          </div>
+          <div class="event-content">
+            <h3>Marketing Meetup</h3>
+            <p>Join industry leaders for insights and networking.</p>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="swiper-slide event-card">
+          <div class="event-top">
+            <div class="event-date">
+              <span class="day">18</span>
+              <span class="month">Sep</span>
+            </div>
+            <div class="event-thumb">
+              <img src="assets/event.jpg" alt="">
+            </div>
+          </div>
+          <div class="event-content">
+            <h3>Growth Summit</h3>
+            <p>Strategies to scale your digital campaigns.</p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="swiper-slide event-card">
+          <div class="event-top">
+            <div class="event-date">
+              <span class="day">05</span>
+              <span class="month">Oct</span>
+            </div>
+            <div class="event-thumb">
+              <img src="assets/event.jpg" alt="">
+            </div>
+          </div>
+          <div class="event-content">
+            <h3>AdTech Conference</h3>
+            <p>Explore the future of advertising technology.</p>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="swiper-slide event-card">
+          <div class="event-top">
+            <div class="event-date">
+              <span class="day">22</span>
+              <span class="month">Nov</span>
+            </div>
+            <div class="event-thumb">
+              <img src="assets/event.jpg" alt="">
+            </div>
+          </div>
+          <div class="event-content">
+            <h3>Publisher Workshop</h3>
+            <p>Hands-on session for monetization experts.</p>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="swiper-slide event-card">
+          <div class="event-top">
+            <div class="event-date">
+              <span class="day">10</span>
+              <span class="month">Dec</span>
+            </div>
+            <div class="event-thumb">
+              <img src="assets/event.jpg" alt="">
+            </div>
+          </div>
+          <div class="event-content">
+            <h3>Year-End Meetup</h3>
+            <p>Wrap up the year with insights and connections.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ===================== End Events Section ===================== -->
 
     <!-- KPIs -->
     <section class="kpi-section" id="kpis">
       <div class="container kpi-container">
 
-        <h2 class="kpi-title">Company Insights</h2>
+      <h2 class="kpi-title">
+        <span>Company</span> <span>Insights</span>
+      </h2>
         <h1 id="hero-heading" class="hero-title">
           <span class="line-1">Connecting Premium Advertisers</span>
           <span class="line-2">To High-Intent
@@ -464,7 +560,7 @@
 
       <!-- Contact / Offices -->
       <div class="footer-contact">
-        <h4 class="footer-title">Contact</h4>
+        <h4 class="footer-title ">Contact</h4>
         <!-- <a class="footer-mail" href="mailto:hello@adobrain.com">hello@adobrain.com</a>
       <a class="footer-tel" href="tel:+91XXXXXXXXXX">+91 XXXXXXXXXX</a> -->
 
@@ -497,7 +593,7 @@
       </div>
     </div>
   </footer>
-
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <script src="./script.js"></script>
 </body>

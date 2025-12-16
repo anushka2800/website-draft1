@@ -358,7 +358,19 @@ document.addEventListener("DOMContentLoaded", function () {
       colObserver.observe(publisherCol);
     }
   }
+const eventsSwiper = new Swiper('.events-slider', {
+  slidesPerView: 4,
+  spaceBetween: 24,   // 👈 smaller gap
+  grabCursor: true,
+  speed: 600,
 
+  breakpoints: {
+    1400: { slidesPerView: 4 },
+    1280: { slidesPerView: 3 },
+    768:  { slidesPerView: 2 },
+    0:    { slidesPerView: 1 },
+  },
+});
   /* ================== FOOTER YEAR ================== */
 
   const yearSpan = document.getElementById("year");
