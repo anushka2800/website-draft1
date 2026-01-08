@@ -1,0 +1,187 @@
+/* ================= PUBLISHER HERO ================= */
+
+.publisher-hero {
+  padding: 140px 0 110px;
+  background: #F5F5F5;
+  position: relative;
+  overflow: hidden;
+}
+
+.publisher-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 80px;
+  align-items: center;
+}
+
+/* LEFT CONTENT */
+
+.publisher-hero-content {
+  max-width: 620px;
+}
+
+.publisher-hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 4vw, 4.6rem);
+  line-height: 1.2;
+  margin: 0 0 22px;
+    letter-spacing: 0.04em;
+  position: relative;
+  top: -3rem;
+}
+
+.publisher-hero-title span {
+   display: block;
+
+    background: linear-gradient(90deg,
+            #ff006e,
+            #ff3a00,
+            #ff6b00,
+            #ff9500,
+            #ffca00,
+            #00ff9f,
+            #9c00ff,
+            #ff006e);
+    background-size: 300% 300%;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation: gradientShift 12s ease infinite;
+
+    -webkit-text-stroke: 4px;
+    -webkit-text-stroke-color: transparent;
+    paint-order: stroke fill;
+
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.25)
+}
+
+.publisher-hero-subtitle {
+  font-size: 1.5rem;
+  color: var(--light-text);
+  font-weight: 500;
+  max-width: 48ch;
+  margin-bottom: 14px;
+  margin-top: -3rem;
+}
+
+.publisher-hero-trust {
+  font-size: 1rem;
+  color: var(--light-muted);
+  font-weight: 500;
+}
+
+/* RIGHT VISUAL */
+/* ================= CHART BASE ================= */
+
+.publisher-hero-visual {
+  width: 600px;
+  margin-left: auto;
+  margin-top: -5rem;
+ 
+}
+
+.publisher-chart {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 10 / 6;
+}
+
+/* Grid */
+.grid-lines line {
+  stroke: var(--light-muted);
+  stroke-opacity: 0.25;
+  stroke-width: 1;
+}
+
+/* Titles */
+.chart-title {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  fill: var(--light-title);
+  letter-spacing: 0.04em;
+}
+
+/* Axis titles */
+.axis-title {
+  font-size: 1rem;
+  fill: var(--light-muted);
+  font-weight: 500;
+  
+}
+
+/* Axis values */
+.axis-values text {
+  font-size: 0.95rem;
+  fill: var(--light-muted);
+}
+
+/* Points glow */
+#startDot,
+#endDot,
+circle[id^="p"] {
+  filter: drop-shadow(0 0 6px rgba(0, 212, 255, 0.45));
+}
+
+/* Prevent text selection */
+.publisher-chart text {
+  user-select: none;
+}
+
+.hero-blob {
+  width: 400px;          /* smaller than homepage */
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.35));
+  transform-origin: center;
+  /* We will move them via CSS variables from JS */
+ transform:
+    translate3d(
+      var(--blob-offset-x, 0px),
+      var(--blob-offset-y, 0px),
+      0
+    )
+    scale(var(--blob-scale, 1))
+    rotate(var(--blob-rotate, 0deg));
+  opacity: 0.75;
+}
+
+/* Hero end */
+.hero-blob--pub-hero-left {
+  top: 0rem;
+  left: -8rem;
+}
+
+/* Blue Blob – Top Right */
+.hero-blob--pub-hero-right {
+  top: 6rem;
+  right: -10rem;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .publisher-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 60px;
+    text-align: center;
+  }
+
+  .publisher-hero-content {
+    margin: 0 auto;
+  }
+
+  .publisher-hero-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .publisher-chart {
+    aspect-ratio: 4 / 3;
+  }
+
+  .publisher-hero-visual {
+    margin-left: 0;
+    width: 100%;
+  }
+}

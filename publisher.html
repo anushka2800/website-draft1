@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>Advertisers | Adobrain</title>
+
+  <!-- SAME FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Eczar:wght@400..800&display=swap" rel="stylesheet">
+
+  <!-- SAME CSS -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./stylesheets/publisher.css">
+  <link rel="stylesheet" href="./stylesheets/footer.css">
+  <link rel="stylesheet" href="./stylesheets/kpi.css"> <!-- optional -->
+</head>
+
+<body>
+<header class="site-header" role="banner">
+    <nav id="primary-nav" class="nav" role="navigation" aria-label="Main navigation">
+      <div class="container header-inner">
+        <div class="brand" aria-label="Homepage">
+          <a href="/">
+            <img src="./assets/logo.png" alt="Adobrain logo">
+          </a>
+        </div>
+
+        <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation">
+          <span class="hamburger"></span>
+        </button>
+        <ul class="nav-list">
+          <li class="has-sub">
+            <a href="#company" aria-haspopup="true" aria-expanded="false">Company ▾</a>
+            <ul class="dropdown" aria-label="Company submenu">
+              <li><a href="#about">About us</a></li>
+              <li><a href="#careers">Careers</a></li>
+            </ul>
+          </li>
+          <li><a href="./advertiser.html">Advertisers</a></li>
+          <li><a href="./publisher.html">Publishers</a></li>
+          <li><a href="#news">News</a></li>
+          <li><a class="btn-cta" href="#contact">Let's Talk</a></li>
+        </ul>
+    </nav>
+    </div>
+  </header>
+
+  <main id="publisher-page">
+    <!-- ================= PUBLISHER HERO SECTION ================= -->
+<section class="publisher-hero" id="publisher-hero">
+  <div class="container publisher-hero-grid">
+
+    <!-- LEFT CONTENT -->
+    <div class="publisher-hero-content">
+      <h1 class="publisher-hero-title">
+        <span>Turn Your Traffic</span>
+        <span>Into Scalable Revenue</span>
+      </h1>
+
+      <p class="publisher-hero-subtitle">
+        Monetize your website with premium demand,
+        high fill rates, and brand-safe ads.
+      </p>
+
+      <p class="publisher-hero-trust">
+        Trusted by 10,000+ Publishers • Global Demand • Transparent Payouts
+      </p>
+    </div>
+
+    <!-- RIGHT VISUAL -->
+   <div class="publisher-hero-visual">
+
+  <svg
+    class="publisher-chart"
+    viewBox="0 0 700 420"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+
+    <!-- ===== DEFINITIONS ===== -->
+    <defs>
+      <linearGradient id="chartLineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="var(--c5)" />
+        <stop offset="100%" stop-color="var(--c6)" />
+      </linearGradient>
+
+      <linearGradient id="chartAreaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="var(--c5)" stop-opacity="0.35" />
+        <stop offset="100%" stop-color="var(--c6)" stop-opacity="0.05" />
+      </linearGradient>
+    </defs>
+
+    <!-- ===== Y AXIS TITLE ===== -->
+    <text
+      x="18"
+      y="240"
+      transform="rotate(-90 18 240)"
+      class="axis-title"
+    >
+      Revenue Growth (%)
+    </text>
+
+    <!-- ===== X AXIS TITLE ===== -->
+    <text x="330" y="417" text-anchor="middle" class="axis-title">
+      Time (Months)
+    </text>
+
+    <!-- ===== GRID ===== -->
+    <g class="grid-lines">
+      <line x1="80" y1="360" x2="640" y2="360" />
+      <line x1="80" y1="290" x2="640" y2="290" />
+      <line x1="80" y1="220" x2="640" y2="220" />
+      <line x1="80" y1="150" x2="640" y2="150" />
+      <line x1="80" y1="80"  x2="640" y2="80" />
+    </g>
+
+    <!-- ===== Y AXIS VALUES ===== -->
+    <g class="axis-values">
+      <text x="45" y="364">0%</text>
+      <text x="40" y="294">100%</text>
+      <text x="40" y="224">200%</text>
+      <text x="40" y="154">300%</text>
+      <text x="40" y="84">400%</text>
+    </g>
+
+    <!-- ===== X AXIS VALUES ===== -->
+    <g class="axis-values">
+      <text x="100" y="385">M1</text>
+      <text x="180" y="385">M2</text>
+      <text x="260" y="385">M3</text>
+      <text x="340" y="385">M4</text>
+      <text x="420" y="385">M5</text>
+      <text x="500" y="385">M6</text>
+    </g>
+
+    <!-- ===== AREA ===== -->
+    <path
+      id="chartArea"
+      d="
+        M80 360
+        C150 320, 210 290, 260 260
+        C320 220, 380 170, 440 120
+        C500 80, 560 40, 640 30
+        L640 360 Z
+      "
+      fill="url(#chartAreaGradient)"
+      opacity="0"
+    />
+
+    <!-- ===== LINE ===== -->
+    <path
+      id="chartLine"
+      d="
+        M80 360
+        C150 320, 210 290, 260 260
+        C320 220, 380 170, 440 120
+        C500 80, 560 40, 640 30
+      "
+      fill="none"
+      stroke="url(#chartLineGradient)"
+      stroke-width="5.5"
+      stroke-linecap="round"
+    />
+
+    <!-- ===== START & END DOT ===== -->
+    <circle id="startDot" cx="80" cy="360" r="0" fill="var(--c5)" />
+    <circle id="endDot" cx="640" cy="30" r="0" fill="var(--c6)" />
+
+    <!-- ===== DATA POINTS ===== -->
+    <circle id="p1"  cx="80"  cy="360" r="0" fill="var(--c5)" />
+    <circle id="p2"  cx="150" cy="320" r="0" fill="var(--c5)" />
+    <circle id="p3"  cx="210" cy="290" r="0" fill="var(--c5)" />
+    <circle id="p4"  cx="260" cy="260" r="0" fill="var(--c5)" />
+    <circle id="p5"  cx="320" cy="220" r="0" fill="var(--c5)" />
+    <circle id="p6"  cx="380" cy="170" r="0" fill="var(--c5)" />
+    <circle id="p7"  cx="440" cy="120" r="0" fill="var(--c5)" />
+    <circle id="p8"  cx="500" cy="80"  r="0" fill="var(--c5)" />
+    
+
+  </svg>
+
+</div>
+    </div>
+   <svg
+  class="hero-blob hero-blob--pub-hero-left"
+  data-section=".publisher-hero"
+  data-direction="left"
+  viewBox="0 0 400 400"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+>
+  <path
+    class="blob-path"
+    fill="#ff006e"
+    d="M308,246Q280,292,230,312Q180,332,135,305Q90,278,70,230Q50,182,78,140Q106,98,158,78Q210,58,260,82Q310,106,328,158Q346,210,308,246Z"
+    data-alt-shape="M320,240Q295,300,235,320Q175,340,130,305Q85,270,70,225Q55,180,85,135Q115,90,165,75Q215,60,260,90Q305,120,330,170Q355,220,320,240Z"
+  />
+</svg>
+
+<svg
+  class="hero-blob hero-blob--pub-hero-right"
+  data-section=".publisher-hero"
+  data-direction="right"
+  viewBox="0 0 400 400"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+>
+  <defs>
+    <linearGradient id="blobGradientPublisher" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0cd7e6" />
+      <stop offset="100%" stop-color="#14f0fa" />
+    </linearGradient>
+  </defs>
+
+  <path
+    class="blob-path"
+    fill="url(#blobGradientPublisher)"
+    d="M290,240Q265,290,215,305Q165,320,120,295Q75,270,60,225Q45,180,75,140Q105,100,155,85Q205,70,250,90Q295,110,315,155Q335,200,290,240Z"
+    data-alt-shape="M300,250Q270,310,210,330Q150,350,110,310Q70,270,60,220Q50,170,85,130Q120,90,170,80Q220,70,265,100Q310,130,330,180Q350,230,300,250Z"
+  />
+</svg>
+
+</section>
+<!-- ================= END PUBLISHER HERO ================= -->
+
+</main>
+
+ <footer class="site-footer" role="contentinfo">
+    <div class="container footer-grid">
+      <!-- Brand + Tagline + Social -->
+      <div class="footer-brand">
+        <a href="#" class="logo-footer">Adobrain</a>
+        <p class="tagline">
+          We deliver transparent, data-driven advertising and media technology solutions — empowering brands and
+          publishers worldwide with innovation, performance, and trust.
+        </p>
+
+        <div class="social-links" aria-label="Social media">
+          <a href="#" aria-label="LinkedIn" class="social">
+            <!-- LinkedIn -->
+            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor"
+                d="M6.94 6.5A2.44 2.44 0 1 1 4.5 4.06 2.44 2.44 0 0 1 6.94 6.5M4.75 8.5h4.39V20H4.75zM14.4 8.5c-2.36 0-3.58 1.26-4.07 2.15V8.5H5.94V20h4.39v-6.3c0-1.66.32-3.27 2.37-3.27 2.02 0 2.05 1.89 2.05 3.37V20h4.39v-6.95c0-3.54-1.21-4.55-4.11-4.55z" />
+            </svg>
+          </a>
+          <a href="#" aria-label="X" class="social">
+            <!-- X / Twitter -->
+            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M4 4h3.7l4.1 5.7L16.4 4H20l-6.1 8.2L20 20h-3.7l-4.4-6.1L7.6 20H4l6.6-8.9z" />
+            </svg>
+          </a>
+          <a href="#" aria-label="Instagram" class="social">
+            <!-- Instagram -->
+            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor"
+                d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm5 3.5A5.5 5.5 0 1 1 6.5 13 5.5 5.5 0 0 1 12 7.5m0 2A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5M18 6.7a1 1 0 1 1-1 1 1 1 0 0 1 1-1" />
+            </svg>
+          </a>
+          <a href="#" aria-label="YouTube" class="social">
+            <!-- YouTube -->
+            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor"
+                d="M10 15V9l5 3zm11.5-6.5a3.5 3.5 0 0 0-2.47-2.47C17.63 5.5 12 5.5 12 5.5s-5.63 0-7.03.53A3.5 3.5 0 0 0 2.5 8.5 36.18 36.18 0 0 0 2 12a36.18 36.18 0 0 0 .5 3.5 3.5 3.5 0 0 0 2.47 2.47C6.37 18.5 12 18.5 12 18.5s5.63 0 7.03-.53a3.5 3.5 0 0 0 2.47-2.47A36.18 36.18 0 0 0 22 12a36.18 36.18 0 0 0-.5-3.5z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <nav class="footer-links" aria-label="Quick links">
+        <h4 class="footer-title">Quick Links</h4>
+        <ul>
+          <li><a href="#about">About us</a></li>
+          <li><a href="#careers">Careers</a></li>
+          <li><a href="#advertisers">Advertisers</a></li>
+          <li><a href="#publishers">Publishers</a></li>
+          <li><a href="#news">News</a></li>
+          <li><a href="#lets-talk">Let's Talk</a></li>
+        </ul>
+      </nav>
+
+      <!-- Contact / Offices -->
+      <div class="footer-contact">
+        <h4 class="footer-title ">Contact</h4>
+        <!-- <a class="footer-mail" href="mailto:hello@adobrain.com">hello@adobrain.com</a>
+      <a class="footer-tel" href="tel:+91XXXXXXXXXX">+91 XXXXXXXXXX</a> -->
+
+        <div class="office">
+          <h5>India</h5>
+          <address>
+            <!-- Replace with your exact address -->
+            Plot no. 120,Upper Ground Floor,<br>
+            Backside Office,Sewak Park,<br>
+            Dwarka Mor,New Delhi-110059
+          </address>
+        </div>
+        <div class="office second">
+          <h5>USA</h5>
+          <address>
+            <!-- Replace with your exact address -->
+            30 N Gould St Ste. 4000,<br>
+            Sheridan, WY-82801, USA
+          </address>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="container footer-bottom">
+      <p>© <span id="year"></span> Adobrain. All rights reserved.</p>
+      <div class="legal-links">
+        <a href="#">Privacy Policy</a>
+        <!-- <a href="#">Terms of Service</a> -->
+      </div>
+    </div>
+  </footer>
+
+  <!-- SAME JS -->
+   <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="./script.js"></script>
+  <script src="./scripts/publisher.js"></script> <!-- optional -->
+</body>
+</html>

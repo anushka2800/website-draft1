@@ -897,11 +897,11 @@ background:#8C80F6;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  cursor: grab;
+  cursor: pointer;
 }
 
 .events-grid:active {
-  cursor: grabbing;
+ cursor: pointer;
 }
 
 /* Hide scrollbar */
@@ -1035,137 +1035,181 @@ margin: 20px 0px;
   content: "";
   flex: 0 0 18px;
 }
-/* footer */
-/* ===== Footer (enhanced) ===== */
-.site-footer {
-  margin-top: 0px;
-  background: var(--light-title);
-  border-top: 1px solid var(--border);
-  padding: 48px 0 20px;
+
+/* ===================== Leaders Section ===================== */
+.leaders-section {
+  padding: 60px 0;
+  text-align: center;
+  background: #F5F5F5; /* Subtle light pastel pink full-width */
 }
 
-.footer-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr;
-  gap: 36px;
-  align-items: start;
+.leaders-inner-container {
+  max-width: 1200px;              /* Narrower width – adjust as needed (e.g., 900px, 1000px) */
+  margin: 0 auto;                /* Centers it */
+  background: #dbeafe;
+  border-radius: 32px;           /* Large rounded corners */
+  padding: 60px 40px;            /* Internal spacing */
+  box-shadow:0 12px 28px rgba(0, 0, 0, 0.12),
+    0 4px 12px rgba(0, 0, 0, 0.08),
+
+    /* inner top highlight (VISIBLE now) */
+    inset 0 2px 6px rgba(255, 255, 255, 0.85),
+
+    /* inner bottom depth */
+    inset 0 -8px 14px rgba(0, 0, 0, 0.10);
 }
 
-.footer-brand .logo-footer {
+.leaders-title {
+  font-size: 2.3rem;
+  margin: 0 0 12px;
   font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 22px;
-  color: var(--text-dark);
-  text-decoration: none;
+  letter-spacing: 0.04em;
 }
 
-.footer-brand .tagline {
-  margin: 10px 0 14px;
-  color: var(--text-dark);
-  line-height: 1.6;
-  font-weight: 600;
-}
-
-/* Social icons */
-.social-links {
-  display: flex;
-  gap: 12px;
-}
-.social-links .social {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px; height: 36px;
-  border-radius: 10px;
-  border: 1px solid var(--text-dark);
-  color: var(--text-dark);
-  text-decoration: none;
-  transition: transform 160ms ease, border-color 160ms ease, color 160ms ease;
-}
-.social-links .social:hover {
-  transform: translateY(-2px);
-  border-color: var(--light-text);
+.leaders-sub {
   color: var(--light-text);
-}
-
-/* Quick links */
-.footer-links .footer-title,
-.footer-contact .footer-title {
-  margin: 0 0 10px;
-  font-size: 1rem;
-  color: var(--text-dark);
-  pointer-events: none;
-}
-.footer-links ul {
-  list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    gap: 8px;
-}
-.footer-links a {
-  color: var(--text-dark);
-  text-decoration: none;
+  margin: 0 auto 50px;
+  font-size: 1.5rem;
   font-weight: 500;
 }
-.footer-links a:hover {
-   color: var(--light-text);
+
+.leaders-grid {
+  display: flex;
+  justify-content: center;
+  gap: 35px;
+  flex-wrap: nowrap; /* Keeps 4 in one row on desktop */
 }
 
-/* Contact / Offices */
-.footer-contact {
-  display: grid;
-  gap: 8px;
-  pointer-events: none;
+@media (max-width: 1100px) {
+  .leaders-grid {
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  
+  .leaders-inner-container {
+    padding: 50px 30px;
+    border-radius: 24px;
+  }
 }
-.footer-contact .footer-mail,
-.footer-contact .footer-tel {
-  color: var(--light-text);
-  text-decoration: none;
+
+.leader-card {
+  background: transparent;
+  border-radius: 0px;
+  overflow: hidden;
+  transition: transform 0.4s ease;
+ min-width: 0;          /* Allows flex items to shrink below content size */
+  flex: 1 0 200px
+}
+
+.leader-card:hover {
+  transform: translateY(-10px);
+}
+
+.leader-photo {
+ width: 250px;
+  height: 300px;
+  overflow: hidden;
+  margin: 0 auto 20px;   /* Uncomment this: properly centers the photo horizontally */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+}
+
+.leader-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.leader-card:hover .leader-photo img {
+  transform: scale(1.06);
+}
+
+.leader-card h3 {
+  font-size: 1.35rem;
+  margin: 0 0 6px;
+  color: var(--light-title);
   font-weight: 600;
 }
-.footer-contact .footer-mail:hover,
-.footer-contact .footer-tel:hover { color: var(--accent-hover); }
 
-.footer-contact .office { margin-top:-20px; }
-.footer-contact .office h5 {
-  margin: 15px 0 4px;
-  font-size: 0.95rem;
-  color: var(--text-dark);
-}
-.office.second h5{
-  margin-top: 30px;
-}
-.footer-contact address {
-  font-style: normal;
-  color: var(--text-dark);
-  line-height: 1.5;
-  font-weight: bold;
-}
-
-/* Bottom bar */
-.footer-bottom {
-  margin-top: 24px;
-  padding-top: 16px;
-  border-top: 1px solid var(--accent);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-.footer-bottom p {
+.leader-card p {
+  font-size: 1.05rem;
+  color: var(--light-muted);
   margin: 0;
-  color: var(--text-dark);
+  font-weight: 500;
 }
-.legal-links {
-  display: flex; gap: 14px;
+/* ===================== Tools Section (styled like clients, no marquee) ===================== */
+.tools-section {
+  padding: 48px 0;
+  text-align: center;
+  cursor: default;
+  margin-top: 1rem;
+  margin-bottom: 0px;
+  background-color: #F5F5F5;
+  box-shadow:
+        0 0 10px rgba(10, 248, 249, 0.28),
+    0 0 18px rgba(10, 248, 249, 0.22),
+    0 0 36px rgba(10, 248, 249, 0.15),
+    0 12px 28px rgba(0, 0, 0, 0.08),
+     inset 0 4px 6px rgba(255, 255, 255, 0.28),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.06);
 }
-.legal-links a {
-  color: var(--text-dark);
-  text-decoration: none;
-}
-.legal-links a:hover { color: var(--light-text); }
 
+.tools-title {
+  font-size: 2.3rem;
+  margin: -30px 0 8px;
+  font-family: var(--font-heading);
+  letter-spacing: 0.04em;
+}
+
+.tools-sub {
+  color: var(--light-text);
+  margin: 0 0 20px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Static grid for tools */
+/* Tools grid styled like marquee but STATIC */
+.tools-grid {
+  display: grid;
+   grid-template-columns: repeat(5, 1fr); /* EXACTLY 8 in one row */
+  align-items: center;
+  column-gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 0;
+  justify-content: center;
+}
+.tools-grid .tool-item:nth-child(n+6) {
+  transform: translateX(80px) translateY(15px);
+}
+
+.tool-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70px;              /* SAME visual height */
+}
+
+/* LOGO RULE – DO NOT BREAK THIS */
+.tool-item img {
+  display: block;
+    max-height: 48px;
+    width: auto;
+    opacity: 0.95;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.tool-item img:hover {
+  transform: scale(1.25);
+  opacity: 1;
+}
+/* Extra small logos */
 
 /* ===== KPI Section (matches site palette & cards) ===== */
 

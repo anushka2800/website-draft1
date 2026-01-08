@@ -1,0 +1,104 @@
+.kpi-section {
+  padding: 60px 0 38px;   /* very compact */
+  background: var(--bg-1);
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  margin-top: 32px;       /* sits slightly lower */
+}
+
+/* soft map background */
+.kpi-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('/assets/ChatGPT\ Image\ Nov\ 17\,\ 2025\,\ 12_29_01\ PM.png') center no-repeat;
+  background-size: 120% auto;
+  /* opacity: 0.3;
+  mix-blend-mode: normal;     */
+  pointer-events: none;
+}
+
+.kpi-container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding-top: 50px;      /* minimal top space */
+}
+
+/* Title */
+.kpi-title {
+  font-size: 2.3rem;
+  font-weight: 700;
+ background: linear-gradient(
+    180deg,
+    #ff006e,
+    #ff7a00,
+    #ffd600,
+    #00e5ff,
+    #7c4dff
+  );
+  background-size: 200% 200%;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+
+  -webkit-text-stroke: 0;
+  margin-top: -80px;
+    font-family: var(--font-heading);
+    letter-spacing: 0.04em; /* Cinzel needs spacing */
+
+}
+
+/* .kpi-sub {
+  font-size: 1.2rem;
+    font-weight: 500;
+     color: var(--light-muted);
+  max-width: 60ch;
+  margin: 0 auto 22px;  
+} */
+
+/* KPI stats grid */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 18px;             /* reduced */
+  justify-items: center;
+  margin-top: 0%;
+}
+
+/* Each KPI item */
+.kpi-box {
+  text-align: center;
+  padding: 8px 10px;     /* tighter */
+}
+
+/* KPI number */
+.kpi-box h3 {
+  font-size: 1.55rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #0aa3b5, #18c6d8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 2px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.kpi-box:hover h3 {
+ text-shadow:
+      0 0 8px rgba(14, 200, 215, 0.55),
+      0 0 18px rgba(14, 200, 215, 0.40),
+      0 0 28px rgba(14, 200, 215, 0.25);
+}
+
+
+/* KPI label */
+.kpi-box p {
+  color: var(--light-muted);
+  font-size: 1.2rem;    /* more compact */
+  margin: 0;
+  font-weight: 500;
+}
